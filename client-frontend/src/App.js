@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import SignUp from "../src/pages/SignUp";
+import Login from "../src/pages/Login";
 import ProjectOverView from "../src/pages/ProjectOverview";
 import PostProject from "../src/pages/PostProject";
 import PaymentPage from "../src/pages/PaymentPage";
@@ -16,20 +18,19 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div className="container">
-          <Navbar />
-          <br />
-          <Route path="/" exact component={Home} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/project-overview" component={ProjectOverView} />
-          <Route path="/post-project" component={PostProject} />
-          <Route path="/payment-page" component={PaymentPage} />
-          <Route path="/new-project" component={NewProject} />
-          <Route path="/my-projects" component={MyProjects} />
-          <Route path="/edit-project" component={EditProject} />
-          <Route path="/chat-page" component={ChatPage} />
-          <Redirect to={"/"} />
-        </div>
+        <Navbar />
+        <br />
+        <Route path="/" exact component={Home} />
+        <Route path="/signup" component={SignUp} />
+        <Route path="/login" component={Login} />
+        <Route path="/project-overview" component={ProjectOverView} />
+        <Route path="/post-project" component={PostProject} />
+        <Route path="/payment-page" component={PaymentPage} />
+        <Route path="/new-project" component={NewProject} />
+        <Route path="/my-projects" component={MyProjects} />
+        <Route path="/edit-project" component={EditProject} />
+        <Route path="/chat-page" component={ChatPage} />
+        <Redirect to={"/"} />
       </Router>
     );
   }
