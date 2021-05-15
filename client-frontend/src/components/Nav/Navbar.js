@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Navbar,
-  Nav,
-  Container,
-  Form,
-  FormControl,
-  Button,
-} from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../img/logo.png";
 import "./navbar.css";

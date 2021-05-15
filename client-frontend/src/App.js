@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SignUp from "../src/pages/SignUp";
 import Login from "../src/pages/Login";
+import Search from "../src/pages/Search";
 import ProjectOverView from "../src/pages/ProjectOverview";
 import PostProject from "../src/pages/PostProject";
 import PaymentPage from "../src/pages/PaymentPage";
@@ -23,6 +24,7 @@ class App extends Component {
         <Route path="/" exact component={Home} />
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={Login} />
+        <Route path="/search" component={Search} />
         <Route path="/project-overview" component={ProjectOverView} />
         <Route path="/post-project" component={PostProject} />
         <Route path="/payment-page" component={PaymentPage} />
