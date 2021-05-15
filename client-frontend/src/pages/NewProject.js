@@ -7,10 +7,6 @@ class NewProject extends Component {
   state = {};
   render() {
     return (
-<<<<<<< HEAD
-      <div style={{ marginTop: "30px" }}>
-        <h4>NewProject</h4>
-=======
       <div
         class="  p-3 mb-2  text-white "
         style={{ backgroundImage: `url(${bg})` }}
@@ -95,7 +91,6 @@ class NewProject extends Component {
           <br></br>
           <br></br>
         </div>
->>>>>>> 472682b9f4281e490761f7ed718677205ebfe9c5
       </div>
     );
   }
