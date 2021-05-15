@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import SignUp from "../src/pages/SignUp";
 import ProjectOverView from "../src/pages/ProjectOverview";
 import PostProject from "../src/pages/PostProject";
