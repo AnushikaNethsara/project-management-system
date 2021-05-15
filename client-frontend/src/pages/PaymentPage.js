@@ -42,13 +42,7 @@ class Payment extends Component {
               <h1>$50.99</h1>
               <div></div>
               <div style={{ width: "100%" }}>
-                <Box
-                  display="flex"
-                  flexDirection="row-reverse"
-                  p={1}
-                  m={1}
-                  bgcolor="background.paper"
-                >
+                <Box display="flex" flexDirection="row-reverse" p={1} m={1}>
                   <Button variant="contained">Proceed to Pay</Button>
                 </Box>
               </div>
