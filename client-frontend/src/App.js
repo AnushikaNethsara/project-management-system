@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import SignUp from "../src/pages/SignUp";
+import ProjectOverView from "../src/pages/ProjectOverview";
+import PostProject from "../src/pages/PostProject";
+import PaymentPage from "../src/pages/PaymentPage";
+import NewProject from "../src/pages/NewProject";
+import MyProjects from "../src/pages/MyProjects";
+import Home from "../src/pages/Home";
+import EditProject from "../src/pages/EditProject";
+import ChatPage from "../src/pages/ChatPage";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import Navbar from "../src/components/Nav/Navbar";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {};
+  render() {
+    return (
+      <Router>
+        <div className="container">
+          <Navbar />
+          <br />
+          <Route path="/" exact component={Home} />
+          <Route path="/signup" component={SignUp} />
+          <Route path="/project-overview" component={ProjectOverView} />
+          <Route path="/post-project" component={PostProject} />
+          <Route path="/payment-page" component={PaymentPage} />
+          <Route path="/new-project" component={NewProject} />
+          <Route path="/my-projects" component={MyProjects} />
+          <Route path="/edit-project" component={EditProject} />
+          <Route path="/chat-page" component={ChatPage} />
+          <Redirect to={"/"} />
+        </div>
+      </Router>
+    );
+  }
 }
 
 export default App;
