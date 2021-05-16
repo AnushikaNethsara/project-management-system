@@ -10,10 +10,14 @@ export default function ProjectCard(props) {
         <Card.Body>
           <Row>
             <Col sm={4}>
-              <Image src={props.image} thumbnail />
+              <Link to="/project-overview">
+                <Image src={props.image} thumbnail />
+              </Link>
             </Col>
             <Col sm={8}>
-              <Card.Text>{props.text}</Card.Text>
+              <Link to="/project-overview">
+                <Card.Text>{props.text}</Card.Text>
+              </Link>
             </Col>
           </Row>
           <br></br>

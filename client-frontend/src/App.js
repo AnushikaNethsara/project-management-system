@@ -32,7 +32,7 @@ class App extends Component {
         <Route path="/my-projects" component={MyProjects} />
         <Route path="/edit-project" component={EditProject} />
         <Route path="/chat-page" component={ChatPage} />
-        <Redirect to={"/"} />
+        {/* <Redirect to={"/"} /> */}
       </Router>
     );
   }
