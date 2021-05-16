@@ -19,21 +19,24 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Navbar />
-        <br />
-        <Route path="/" exact component={Home} />
-        <Route path="/signup" component={SignUp} />
-        <Route path="/login" component={Login} />
-        <Route path="/search" component={Search} />
-        <Route path="/project-overview" component={ProjectOverView} />
-        <Route path="/post-project" component={PostProject} />
-        <Route path="/payment-page" component={PaymentPage} />
-        <Route path="/new-project" component={NewProject} />
-        <Route path="/my-projects" component={MyProjects} />
-        <Route path="/edit-project" component={EditProject} />
-        <Route path="/chat-page" component={ChatPage} />
-        {/* <Redirect to={"/"} /> */}
+        <NewProject></NewProject>
       </Router>
+      // <Router>
+      //   <Navbar />
+      //   <br />
+      //   <Route path="/" exact component={Home} />
+      //   <Route path="/signup" component={SignUp} />
+      //   <Route path="/login" component={Login} />
+      //   <Route path="/search" component={Search} />
+      //   <Route path="/project-overview" component={ProjectOverView} />
+      //   <Route path="/post-project" component={PostProject} />
+      //   <Route path="/payment-page" component={PaymentPage} />
+      //   <Route path="/new-project" component={NewProject} />
+      //   <Route path="/my-projects" component={MyProjects} />
+      //   <Route path="/edit-project" component={EditProject} />
+      //   <Route path="/chat-page" component={ChatPage} />
+      //   {/* <Redirect to={"/"} /> */}
+      // </Router>
     );
   }
 }
