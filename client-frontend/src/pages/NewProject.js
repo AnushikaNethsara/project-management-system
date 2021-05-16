@@ -6,10 +6,7 @@ class NewProject extends Component {
   state = {};
   render() {
     return (
-      <div
-        class="  p-3 mb-2  text-white "
-        style={{ backgroundImage: `url(${bg})`, marginTop: "30px" }}
-      >
+      <div>
         <div>
           <div
             class="container-lg shadow p-3 mb-5 bg-body rounded text-dark "
