@@ -7,7 +7,7 @@ const User = require("../models/userModel");
 router.post("/register", async (req, res) => {
   try {
     let { name, email, password, passwordCheck, skills, profilePic } = req.body;
-
+console.log(email+" "+" "+password+" "+passwordCheck)
     // validate
 
     if (!email || !password || !passwordCheck)

@@ -4,8 +4,15 @@ import { Form, Button } from "react-bootstrap";
 import loginBack from "../img/1.jpg";
 import { Link } from "react-router-dom";
 import Axios from "axios";
+import constants from "../constants/constants";
+import PropTypes from "prop-types";
 
 class SignUp extends Component {
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+  };
   constructor(props) {
     super(props);
 
@@ -24,15 +31,25 @@ class SignUp extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  onSubmit(e) {
+  async onSubmit(e) {
     e.preventDefault();
-    let userData={
-      name:this.state.name,
-      email:this.state.email,
-      password:this.state.password,
-      conPassword:this.state.conPassword
+    let userData = {
+      name: this.state.name,
+      email: this.state.email,
+      password: this.state.password,
+      passwordCheck: this.state.conPassword,
+      profilePic: this.state.profilePic,
+      skills: this.state.skills,
+    };
+    try {
+      const loginRes = await Axios.post(
+        constants.backend_url + "/users/register",
+        userData
+      );
+      this.props.history.push("/login");
+    } catch (err) {
+      err.response.data.msg && console.log(err.response.data.msg);
     }
-    //console.log("submit: " + userData.email);
   }
 
   render() {
@@ -51,7 +68,7 @@ class SignUp extends Component {
                 }}
               >
                 <h3 className="text-center" style={{ paddingBottom: "40px" }}>
-                  Sign Up 
+                  Sign Up
                 </h3>
                 <Input
                   name="name"
