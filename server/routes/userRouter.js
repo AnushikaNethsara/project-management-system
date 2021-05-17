@@ -4,10 +4,9 @@ const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 const User = require("../models/userModel");
 
-
 router.post("/register", async (req, res) => {
   try {
-    let { email, password, passwordCheck, displayName } = req.body;
+    let { name, email, password, passwordCheck, skills, profilePic } = req.body;
 
     // validate
 
@@ -28,15 +27,15 @@ router.post("/register", async (req, res) => {
         .status(400)
         .json({ msg: "An account with this email already exists." });
 
-    if (!displayName) displayName = email;
-
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
 
     const newUser = new User({
       email,
       password: passwordHash,
-      displayName,
+      name,
+      skills,
+      profilePic,
     });
     const savedUser = await newUser.save();
     res.json(savedUser);
@@ -48,7 +47,7 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-
+    console.log(email)
     // validate
     if (!email || !password)
       return res.status(400).json({ msg: "Not all fields have been entered." });
@@ -108,7 +107,5 @@ router.get("/", auth, async (req, res) => {
     id: user._id,
   });
 });
-
-
 
 module.exports = router;
