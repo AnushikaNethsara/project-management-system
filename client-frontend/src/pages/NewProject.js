@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {} from "react-bootstrap";
-import bg from "../images/bg.jpg";
 import TagInput from '../components/TagInput/TagInput';
 
 class NewProject extends Component {

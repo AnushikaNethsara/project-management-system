@@ -16,6 +16,7 @@ import Navbar from "../src/components/Nav/Navbar";
 import UserContext from "./context/userContext";
 import constants from "./constants/constants";
 import Axios from "axios";
+import Profile from "./pages/MyProfile";
 
 const App = () => {
   const [userData, setUserData] = useState({
@@ -65,7 +66,7 @@ const App = () => {
         <Route path="/my-projects" component={MyProjects} />
         <Route path="/edit-project" component={EditProject} />
         <Route path="/chat-page" component={ChatPage} />
-        {/* <Redirect to={"/"} /> */}
+        <Redirect to={"/"} />
       </UserContext.Provider>
     </Router>
   );

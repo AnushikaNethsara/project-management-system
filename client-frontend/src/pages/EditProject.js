@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import bg from "../images/bg.jpg";
 
 class EditProject extends Component {
   state = {};

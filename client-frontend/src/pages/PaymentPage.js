@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Button, Box } from "@material-ui/core";
-import bg from "../images/bg.jpg";
 
 class Payment extends Component {
   state = {};
