@@ -30,3 +30,5 @@ app.use("/users",require('./routes/userRouter'));
 app.use("/project", require("./routes/projectRoutes"));
 app.use("/skill", require("./routes/skillRoutes"));
 app.use("/rating", require("./routes/ratingRoutes"));
+app.use("/projectSkills", require("./routes/projectSkillRoute"));
+app.use("/userSkills", require("./routes/UserSkillRoutes"));
