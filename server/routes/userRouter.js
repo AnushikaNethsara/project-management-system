@@ -6,9 +6,9 @@ const User = require("../models/user.model");
 
 router.post("/register", async (req, res) => {
   try {
-    let { name, email, password, passwordCheck, profilePic } = req.body;
-    console.log(email + " " + " " + password + " " + passwordCheck);
-    // validate
+    let { name, email, password, passwordCheck, profilePic, description } =
+      req.body;
+
 
     if (!email || !password || !passwordCheck)
       return res.status(400).json({ msg: "Not all fields have been entered." });
@@ -35,6 +35,7 @@ router.post("/register", async (req, res) => {
       password: passwordHash,
       name,
       profilePic,
+      description,
     });
     const savedUser = await newUser.save();
     res.json(savedUser);
@@ -107,26 +108,43 @@ router.get("/", auth, async (req, res) => {
   });
 });
 
-router.route("/update").post(function (req, res) {
-  let user = new User(req.body);
-  user
-    .updateOne(
-      { email: user.email },
-      {
-        $set: {
-          name: user.name,
-          profilePic: user.profilePic,
-          password: user.password,
-        },
-      }
-    )
-    .then((sup) => {
-      res.status(200).json({ userUpdate: "successful" });
-    })
-    .catch((err) => {
-      res.status(400).send("User Update Failed!");
+//**** update account details ****//
+router.post("/update/:id", async (req, res) => {
+  try {
+    await User.findById(req.params.id).then((user) => {
+      user.name = req.body.name;
+      user.description = req.body.description;
+      user.profilePic = req.body.profilePic;
+      user
+        .save()
+        .then(() => res.status(200).json({ msg: "User Account Updated!" }))
+        .catch((err) => res.status(400).json({ error: err.message }));
     });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
+
+// router.route("/update").post(function (req, res) {
+//   let user = new User(req.body);
+//   user
+//     .updateOne(
+//       { email: user.email },
+//       {
+//         $set: {
+//           name: user.name,
+//           profilePic: user.profilePic,
+//           password: user.password,
+//         },
+//       }
+//     )
+//     .then((sup) => {
+//       res.status(200).json({ userUpdate: "successful" });
+//     })
+//     .catch((err) => {
+//       res.status(400).send("User Update Failed!");
+//     });
+// });
 
 router.route("/passwordReset/:email/:password").get(function (req, res) {
   let email = req.params.email;

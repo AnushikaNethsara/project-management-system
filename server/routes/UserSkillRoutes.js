@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const UserSkill = require("../models/userSkill.model");
 
-//*** add project Skills****//
 router.route("/add").post(function (req, res) {
   let userSkill = new UserSkill(req.body);
 

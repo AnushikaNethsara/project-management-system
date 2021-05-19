@@ -34,6 +34,7 @@ const Login = () => {
         user: loginRes.data.user,
       });
       localStorage.setItem("auth-token", loginRes.data.token);
+      localStorage.setItem("auth-id", loginRes.data.user.id);
       history.push("/my-profile");
     } catch (err) {
       err.response.data.msg && console.log(err.response.data.msg);

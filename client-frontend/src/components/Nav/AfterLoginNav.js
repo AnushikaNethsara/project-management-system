@@ -10,6 +10,7 @@ const AfterLoginNav = () => {
   const logout = () => {
       console.log("logout: ")
     localStorage.setItem("auth-token", "");
+    localStorage.setItem("auth-id", "");
     history.push("/");
     window.location.reload();
     console.log("logout2: ");
