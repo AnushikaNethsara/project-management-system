@@ -161,4 +161,19 @@ router.route("/getDetails").get(function (req, res) {
       res.status(500).json(err);
     });
 });
+
+//*** get user by id ***//
+router.get("/get-user/:id", async (req, res) => {
+  try {
+    let id = req.params.id;
+
+    await User.find({ _id: id }).exec().
+    then((user) => {
+      res.json(user);
+    })
+        .catch((err) => res.status(400).json("Error : " + err));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 module.exports = router;
