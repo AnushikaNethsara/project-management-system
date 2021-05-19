@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import TagInput from "../components/TagInput/TagInput"
 class NewProject extends Component {
   state = {};
   render() {
@@ -29,7 +29,7 @@ class NewProject extends Component {
                   <label htmlFor="exampleInputPassword1" className="form-label">
                     <h4>Required Skills</h4>
                   </label>
-                  {/* <TagInput/> */}
+                  <TagInput/>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="exampleInputEmail1" className="form-label">
