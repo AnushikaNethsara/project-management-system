@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import {} from "react-bootstrap";
 import TagInput from '../components/TagInput/TagInput';
 
 class NewProject extends Component {
