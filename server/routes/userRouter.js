@@ -7,7 +7,7 @@ const User = require("../models/user.model");
 router.post("/register", async (req, res) => {
   try {
     let { name, email, password, passwordCheck, profilePic } = req.body;
-console.log(email+" "+" "+password+" "+passwordCheck)
+    console.log(email + " " + " " + password + " " + passwordCheck);
     // validate
 
     if (!email || !password || !passwordCheck)
@@ -34,7 +34,7 @@ console.log(email+" "+" "+password+" "+passwordCheck)
       email,
       password: passwordHash,
       name,
-      profilePic
+      profilePic,
     });
     const savedUser = await newUser.save();
     res.json(savedUser);
@@ -46,7 +46,7 @@ console.log(email+" "+" "+password+" "+passwordCheck)
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(email)
+    console.log(email);
     // validate
     if (!email || !password)
       return res.status(400).json({ msg: "Not all fields have been entered." });
@@ -107,43 +107,58 @@ router.get("/", auth, async (req, res) => {
   });
 });
 
-router.route('/update').post(function (req,res) {
+router.route("/update").post(function (req, res) {
   let user = new User(req.body);
-  user.updateOne({email:user.email},{$set: {name:user.name,profilePic:user.profilePic,password:user.password}}).then(sup=>{
-    res.status(200).json({'userUpdate':'successful'});
-  }).catch(err=>{
-    res.status(400).send('User Update Failed!');
-  });
+  user
+    .updateOne(
+      { email: user.email },
+      {
+        $set: {
+          name: user.name,
+          profilePic: user.profilePic,
+          password: user.password,
+        },
+      }
+    )
+    .then((sup) => {
+      res.status(200).json({ userUpdate: "successful" });
+    })
+    .catch((err) => {
+      res.status(400).send("User Update Failed!");
+    });
 });
 
-router.route('/passwordReset/:email/:password').get(function (req,res) {
+router.route("/passwordReset/:email/:password").get(function (req, res) {
   let email = req.params.email;
   let password = req.params.password;
-  User.find({email:email}).exec().then(item => {
-    if( !item=='' ){
-      User.updateOne({email:email},{$set: {password:password}}).then(sup=>{
-        res.status(200).json({'passwordReset':'successful'});
-      }).catch(err=>{
-        res.status(400).json(err);
-      });
-    }else{
-      res.status(404).json({"message": "Email not found"});
-    }
-  })
-      .catch(err=>{
-        res.status(500).json(err);
-      })
-
+  User.find({ email: email })
+    .exec()
+    .then((item) => {
+      if (!item == "") {
+        User.updateOne({ email: email }, { $set: { password: password } })
+          .then((sup) => {
+            res.status(200).json({ passwordReset: "successful" });
+          })
+          .catch((err) => {
+            res.status(400).json(err);
+          });
+      } else {
+        res.status(404).json({ message: "Email not found" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
 });
 
-router.route('/getDetails').get(function (req, res) {
-
-  User.find({ }).exec().then(item => {
-
-    res.status(200).json(item)
-  })
-      .catch(err => {
-        res.status(500).json(err);
-      });
+router.route("/getDetails").get(function (req, res) {
+  User.find({})
+    .exec()
+    .then((item) => {
+      res.status(200).json(item);
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
 });
 module.exports = router;

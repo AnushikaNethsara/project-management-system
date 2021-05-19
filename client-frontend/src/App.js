@@ -66,7 +66,7 @@ const App = () => {
         <Route path="/my-projects" component={MyProjects} />
         <Route path="/edit-project" component={EditProject} />
         <Route path="/chat-page" component={ChatPage} />
-        <Redirect to={"/"} />
+        <Route path="/my-profile" component={Profile} />
       </UserContext.Provider>
     </Router>
   );
