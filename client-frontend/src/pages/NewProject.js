@@ -1,5 +1,10 @@
 import React, { Component } from "react";
+<<<<<<< HEAD
 import TagInput from "../components/TagInput/TagInput"
+=======
+import TagInput from '../components/TagInput/TagInput';
+
+>>>>>>> 9975eb0cddb075dfdede2372b892e06fd8cf603a
 class NewProject extends Component {
   state = {};
   render() {
