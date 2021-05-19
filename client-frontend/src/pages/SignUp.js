@@ -23,6 +23,7 @@ class SignUp extends Component {
       conPassword: "",
       skills: [],
       profilePic: "",
+      description:""
     };
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -33,6 +34,7 @@ class SignUp extends Component {
 
   async onSubmit(e) {
     e.preventDefault();
+    //console.log("des: " + this.state.description);
     let userData = {
       name: this.state.name,
       email: this.state.email,
@@ -40,6 +42,7 @@ class SignUp extends Component {
       passwordCheck: this.state.conPassword,
       profilePic: this.state.profilePic,
       skills: this.state.skills,
+      description: this.state.description,
     };
     try {
       const loginRes = await Axios.post(
@@ -67,7 +70,7 @@ class SignUp extends Component {
                   width: "90%",
                 }}
               >
-                <h3 className="text-center" style={{ paddingBottom: "40px" }}>
+                <h3 className="text-center" style={{ paddingBottom: "20px" }}>
                   Sign Up
                 </h3>
                 <Input
@@ -85,10 +88,12 @@ class SignUp extends Component {
                   placeholder="Enter Your Email..."
                 ></Input>
                 <Input
-                  lable="Skills"
+                  lable="Description"
+                  name="description"
                   as="textarea"
                   rows="3"
-                  placeholder="Enter Your Skills..."
+                  placeholder="Enter Description..."
+                  onChange={(e) => this.handleChange(e)}
                 ></Input>
 
                 <Form>

@@ -4,10 +4,10 @@ const Rating = require("../models/rating.model");
 //*** add rating ****//
 router.post("/add", async (req, res) => {
   try {
-    let { user_id,project_id,review,rating } = req.body;
+    let { seller_id,buyer_id,project_id,review,rating } = req.body;
     const newRating = new Rating({
-      user_id,
-      project_id,
+      seller_id,
+      buyer_id,
       review,
       rating,
     });
@@ -19,12 +19,12 @@ router.post("/add", async (req, res) => {
   }
 });
 
-//***get my lessons****//
+//***get seller reviews****//
 
-router.get("/review/:id", async (req, res) => {
+router.get("/sellerReview/:id", async (req, res) => {
   const id = req.params.id;
-  await Rating.find({ user_id: id })
-    .populate("user_id")
+  await Rating.find({ seller_id: id })
+    .populate("seller_id").populate("buyer_id")
     .exec()
     .then((comment) => {
       if (comment) {
@@ -37,5 +37,25 @@ router.get("/review/:id", async (req, res) => {
       res.status(500).json(err);
     });
 });
+
+//***get buyer reviews****//
+
+router.get("/buyerReview/:id", async (req, res) => {
+  const id = req.params.id;
+  await Rating.find({ buyer_id: id })
+      .populate("seller_id").populate("buyer_id")
+      .exec()
+      .then((comment) => {
+        if (comment) {
+          res.status(200).json(comment);
+        } else {
+          res.status(404).json({ message: "not found" });
+        }
+      })
+      .catch((err) => {
+        res.status(500).json(err);
+      });
+});
+
 
 module.exports = router;
