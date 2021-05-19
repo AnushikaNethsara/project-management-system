@@ -1,10 +1,6 @@
 import React, { Component } from "react";
-<<<<<<< HEAD
-import TagInput from "../components/TagInput/TagInput"
-=======
-import TagInput from '../components/TagInput/TagInput';
+import TagInput from "../components/TagInput/TagInput";
 
->>>>>>> 9975eb0cddb075dfdede2372b892e06fd8cf603a
 class NewProject extends Component {
   state = {};
   render() {
@@ -34,7 +30,7 @@ class NewProject extends Component {
                   <label htmlFor="exampleInputPassword1" className="form-label">
                     <h4>Required Skills</h4>
                   </label>
-                  <TagInput/>
+                  <TagInput />
                 </div>
                 <div className="mb-3">
                   <label htmlFor="exampleInputEmail1" className="form-label">
