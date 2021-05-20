@@ -11,6 +11,9 @@ const projectSchema = new mongoose.Schema({
     ref: "user",
     required:true
   },
+  skills:[{
+    type:String
+  }],
   price: { type: Number, required: true },
   title: { type: String, required: true },
   description: { type: String, required: true },

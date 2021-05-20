@@ -4,10 +4,11 @@ const ProjectSkill=require("../models/projectSkill.model")
 //*** add project ****//
 router.post("/add", async (req, res) => {
   try {
-    let { seller_id, buyer_id,price, title, description } = req.body;
+    let { seller_id, buyer_id,skills,price, title, description } = req.body;
     const newProject = new Project({
       seller_id,
       buyer_id,
+      skills,
       title,
       description,
       price,
@@ -81,4 +82,18 @@ router.get("/", async (req, res) => {
   }
 });
 
+//*** get project skills by id ***//
+router.get("/getProjectSkills/:id", async (req, res) => {
+  try {
+    let id = req.params.id;
+
+    await Project.find({ _id: id } ,{ skills: 1,_id:0 }).exec().
+    then((project) => {
+      res.json(project);
+    })
+        .catch((err) => res.status(400).json("Error : " + err));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 module.exports = router;

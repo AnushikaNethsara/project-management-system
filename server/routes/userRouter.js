@@ -6,7 +6,7 @@ const User = require("../models/user.model");
 
 router.post("/register", async (req, res) => {
   try {
-    let { name, email, password, passwordCheck, profilePic, description } =
+    let { name, email, password,skills, passwordCheck, profilePic, description } =
       req.body;
 
 
@@ -33,6 +33,7 @@ router.post("/register", async (req, res) => {
     const newUser = new User({
       email,
       password: passwordHash,
+      skills,
       name,
       profilePic,
       description,
@@ -113,6 +114,7 @@ router.post("/update/:id", async (req, res) => {
   try {
     await User.findById(req.params.id).then((user) => {
       user.name = req.body.name;
+      user.skills=req.body.skills,
       user.description = req.body.description;
       user.profilePic = req.body.profilePic;
       user
@@ -186,6 +188,21 @@ router.get("/get-user/:id", async (req, res) => {
     let id = req.params.id;
 
     await User.find({ _id: id }).exec().
+    then((user) => {
+      res.json(user);
+    })
+        .catch((err) => res.status(400).json("Error : " + err));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+//*** get user skills by id ***//
+router.get("/getSkills/:id", async (req, res) => {
+  try {
+    let id = req.params.id;
+
+    await User.find({ _id: id } ,{ skills: 1,_id:0 }).exec().
     then((user) => {
       res.json(user);
     })
