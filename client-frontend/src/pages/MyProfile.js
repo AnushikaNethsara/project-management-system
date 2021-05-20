@@ -4,7 +4,16 @@ import bg2 from "../img/bg2.jpg";
 import { Box, Grid, Paper, Typography, Button } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
 import Feedback from "../components/Feedback/Feedback";
-import { Nav, form, Image, Col, Row, Container, Card } from "react-bootstrap";
+import {
+  Nav,
+  form,
+  Image,
+  Col,
+  Row,
+  Container,
+  Card,
+  Modal,
+} from "react-bootstrap";
 import bio from "../img/bio.png";
 import { alignPropType } from "react-bootstrap/esm/DropdownMenu";
 import Profilepic from "../components/ProfileCircle/ProfileCircle";
@@ -24,8 +33,10 @@ export class Profile extends Component {
     super();
     this.state = {
       values: [],
+      show: false,
     };
     this.getAccountDeatils = this.getAccountDeatils.bind(this);
+    this.handleModal = this.handleModal.bind(this);
   }
 
   componentDidMount() {
@@ -34,6 +45,10 @@ export class Profile extends Component {
     } else {
       this.getAccountDeatils();
     }
+  }
+
+  handleModal() {
+    this.setState({ show: !this.state.show });
   }
   getAccountDeatils() {
     var userId = localStorage.getItem("auth-id");
@@ -101,12 +116,45 @@ export class Profile extends Component {
                       <Button variant="contained">Edit Profile</Button>
                     </Box>
                   </Link>
+
+                  {/* ***model*** */}
+                  <div className="text-center my-3">
+                    <Box display="flex" justifyContent="center">
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          this.handleModal();
+                        }}
+                      >
+                        Delete Profile
+                      </Button>
+                      <Modal
+                        id="one"
+                        show={this.state.show}
+                        onHide={() => this.handleModal()}
+                      >
+                        <Modal.Header>Message</Modal.Header>
+                        <Modal.Body>
+                          <h6>Are you sure want to cancel your account?</h6>
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <button class="btn btn-primary">Yes</button>
+                          <button
+                            type="button"
+                            class="btn btn-primary"
+                            onClick={() => {
+                              this.handleModal();
+                            }}
+                          >
+                            No
+                          </button>
+                        </Modal.Footer>
+                      </Modal>
+                    </Box>
+                  </div>
+                  {/* ***end model*** */}
                 </div>
-                <div className="text-center my-3">
-                  <Box display="flex" justifyContent="center">
-                    <Button variant="contained">Delete Profile</Button>
-                  </Box>
-                </div>
+
                 <br></br>
 
                 <div class="row">

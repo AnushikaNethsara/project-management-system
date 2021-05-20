@@ -4,7 +4,6 @@ import constants from "../constants/constants";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import EditorInsertComment from "material-ui/svg-icons/editor/insert-comment";
-import TagInput from "../components/TagInput/TagInput";
 import SkillSet from "../constants/skills";
 import Chip from "@material-ui/core/Chip";
 import TextField from "@material-ui/core/TextField";
@@ -31,7 +30,6 @@ class EditProfile extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.getAccountDeatils = this.getAccountDeatils.bind(this);
-    this.getSkills = this.getSkills.bind(this);
   }
   componentDidMount() {
     this.getAccountDeatils();
@@ -56,9 +54,7 @@ class EditProfile extends Component {
       });
   }
 
-  getSkills(skillComing) {
-    console.log("skills: " + skillComing);
-  }
+
 
   async onSubmit(e) {
     e.preventDefault();
@@ -108,7 +104,6 @@ class EditProfile extends Component {
                   <label htmlFor="exampleInputPassword1" className="form-label">
                     <h4>Skills</h4>
                   </label>
-                  {/* <TagInput /> */}
 
                   {/* Set Skills */}
                   <Autocomplete
