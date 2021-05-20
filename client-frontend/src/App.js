@@ -17,7 +17,9 @@ import UserContext from "./context/userContext";
 import constants from "./constants/constants";
 import Axios from "axios";
 import Profile from "./pages/MyProfile";
-import EditProfile from "./pages/EditProfile"
+import EditProfile from "./pages/EditProfile";
+import Example from "./pages/Example";
+
 const App = () => {
   const [userData, setUserData] = useState({
     token: undefined,
@@ -67,6 +69,7 @@ const App = () => {
         <Route path="/edit-project" component={EditProject} />
         <Route path="/chat-page" component={ChatPage} />
         <Route path="/my-profile" component={Profile} />
+        <Route path="/example" component={Example} />
         <Route path="/edit-profile" component={EditProfile} />
       </UserContext.Provider>
     </Router>
