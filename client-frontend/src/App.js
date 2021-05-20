@@ -61,12 +61,12 @@ const App = () => {
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={Login} />
         <Route path="/search" component={Search} />
-        <Route path="/project-overview" component={ProjectOverView} />
+        <Route path="/project-overview/:id" component={ProjectOverView} />
         <Route path="/post-project" component={PostProject} />
         <Route path="/payment-page" component={PaymentPage} />
         <Route path="/new-project" component={NewProject} />
         <Route path="/my-projects" component={MyProjects} />
-        <Route path="/edit-project" component={EditProject} />
+        <Route path="/edit-project/:id" component={EditProject} />
         <Route path="/chat-page" component={ChatPage} />
         <Route path="/my-profile" component={Profile} />
         <Route path="/example" component={Example} />
