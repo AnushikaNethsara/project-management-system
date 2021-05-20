@@ -6,7 +6,7 @@ const User = require("../models/user.model");
 
 router.post("/register", async (req, res) => {
   try {
-    let { name, email, password, passwordCheck, profilePic } = req.body;
+    let { name, email, password,skills, passwordCheck, profilePic } = req.body;
 console.log(email+" "+" "+password+" "+passwordCheck)
     // validate
 
@@ -33,6 +33,7 @@ console.log(email+" "+" "+password+" "+passwordCheck)
     const newUser = new User({
       email,
       password: passwordHash,
+      skills,
       name,
       profilePic
     });
@@ -109,7 +110,7 @@ router.get("/", auth, async (req, res) => {
 
 router.route('/update').post(function (req,res) {
   let user = new User(req.body);
-  user.updateOne({email:user.email},{$set: {name:user.name,profilePic:user.profilePic,password:user.password}}).then(sup=>{
+  user.updateOne({email:user.email},{$set: {name:user.name,profilePic:user.profilePic,skills:user.skills,password:user.password}}).then(sup=>{
     res.status(200).json({'userUpdate':'successful'});
   }).catch(err=>{
     res.status(400).send('User Update Failed!');

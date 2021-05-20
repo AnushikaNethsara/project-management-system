@@ -4,10 +4,11 @@ const ProjectSkill=require("../models/projectSkill.model")
 //*** add project ****//
 router.post("/add", async (req, res) => {
   try {
-    let { seller_id, buyer_id,price, title, description } = req.body;
+    let { seller_id, buyer_id,skills,price, title, description } = req.body;
     const newProject = new Project({
       seller_id,
       buyer_id,
+      skills,
       title,
       description,
       price,
