@@ -82,4 +82,18 @@ router.get("/", async (req, res) => {
   }
 });
 
+//*** get project skills by id ***//
+router.get("/getProjectSkills/:id", async (req, res) => {
+  try {
+    let id = req.params.id;
+
+    await Project.find({ _id: id } ,{ skills: 1,_id:0 }).exec().
+    then((project) => {
+      res.json(project);
+    })
+        .catch((err) => res.status(400).json("Error : " + err));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 module.exports = router;
