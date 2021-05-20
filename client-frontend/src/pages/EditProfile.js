@@ -4,6 +4,12 @@ import constants from "../constants/constants";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import EditorInsertComment from "material-ui/svg-icons/editor/insert-comment";
+import TagInput from "../components/TagInput/TagInput";
+import SkillSet from "../constants/skills";
+import Chip from "@material-ui/core/Chip";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+
 
 class EditProfile extends Component {
   static propTypes = {
@@ -20,10 +26,12 @@ class EditProfile extends Component {
       skills: [],
       profilePic: "",
       description: "",
+      fixedOptions: [SkillSet[2]],
     };
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.getAccountDeatils = this.getAccountDeatils.bind(this);
+    this.getSkills = this.getSkills.bind(this);
   }
   componentDidMount() {
     this.getAccountDeatils();
@@ -48,10 +56,14 @@ class EditProfile extends Component {
       });
   }
 
+  getSkills(skillComing) {
+    console.log("skills: " + skillComing);
+  }
+
   async onSubmit(e) {
     e.preventDefault();
     var userId = localStorage.getItem("auth-id");
-    //console.log("sub: " + this.state.description + this.state.name);
+    console.log("sub: " + this.state.skills);
     let userData = {
       name: this.state.name,
       profilePic: this.state.profilePic,
@@ -96,11 +108,41 @@ class EditProfile extends Component {
                   <label htmlFor="exampleInputPassword1" className="form-label">
                     <h4>Skills</h4>
                   </label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="exampleInputPassword1"
+                  {/* <TagInput /> */}
+
+                  {/* Set Skills */}
+                  <Autocomplete
+                    multiple
+                    id="fixed-tags-demo"
+                    value={this.state.skills}
+                    onChange={(event, newValue) => {
+                      this.setState({
+                        skills: [
+                          ...newValue.filter(
+                            (option) =>
+                              this.state.fixedOptions.indexOf(option) === -1
+                          ),
+                        ],
+                      });
+                    }}
+                    options={SkillSet}
+                    getOptionLabel={(option) => option}
+                    renderTags={(tagValue, getTagProps) =>
+                      tagValue.map((option, index) => (
+                        <Chip label={option} {...getTagProps({ index })} />
+                      ))
+                    }
+                    style={{ width: "100%" }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label=""
+                        variant="outlined"
+                        placeholder="Required Skills"
+                      />
+                    )}
                   />
+                  {/* End Set Skills */}
                 </div>
                 <div className="mb-3">
                   <label htmlFor="exampleInputEmail1" className="form-label">
