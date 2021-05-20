@@ -51,7 +51,7 @@ const Login = () => {
           <div className="col">
             <div style={{ paddingTop: "10vh", width: "90%" }}>
               <h3 className="text-center" style={{ paddingBottom: "40px" }}>
-                Log In {values.email}
+                Log In
               </h3>
               <div className="conatiner text-center">
                 <p className="text-danger">{backendError}</p>

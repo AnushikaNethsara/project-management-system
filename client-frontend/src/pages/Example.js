@@ -22,12 +22,14 @@ import PropTypes from "prop-types";
 import constants from "../constants/constants";
 import Axios from "axios";
 import { Link } from "react-router-dom";
+import Photo from "../components/Photo/Photo";
 
 export class Example extends Component {
   constructor() {
     super();
     this.state = {
       show: false,
+      img: undefined,
     };
   }
 
@@ -56,9 +58,11 @@ export class Example extends Component {
             ></p>
           </div>
           <div class="row">
-            <br></br>
-            <br></br>
-            <br></br>
+            <h2>Photo</h2>
+            <Photo
+              key={"60a6b8263c3d614b4cab4fe7"}
+              id={"60a6b8263c3d614b4cab4fe7"}
+            />
           </div>
           <div class="row">
             <div

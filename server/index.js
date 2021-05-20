@@ -9,21 +9,21 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const PORT =5008;
+const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => console.log(`The server has started on port: ${PORT}`));
 
 // set up mongoose
 
-mongoose.connect('mongodb://localhost:27017/ProjectManagement'
-,{useNewUrlParser:true,useUnifiedTopology:true},
-err=>{
-    if(!err)
-    console.log("mongo db connected successfully");
-
+mongoose.connect(
+  process.env.MONGO_URI,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  (err) => {
+    if (!err) console.log("mongo db connected successfully");
     else
-    console.log("Error while connecting"+ JSON.stringify(err,undefined,2));
-})
+      console.log("Error while connecting" + JSON.stringify(err, undefined, 2));
+  }
+);
 
 
 app.use("/users",require('./routes/userRouter'));

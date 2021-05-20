@@ -3,12 +3,68 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 const User = require("../models/user.model");
+const multer = require("multer");
+const ProfilePicture = require("../models/Photo.model");
 
+const upload = multer({
+  limits: {
+    fileSize: 1000000, // max file size 1MB = 1000000 bytes
+  },
+  fileFilter(req, file, cb) {
+    if (!file.originalname.match(/\.(jpeg|jpg)$/)) {
+      cb(new Error("only upload files with jpg or jpeg format."));
+    }
+    cb(undefined, true); // continue with upload
+  },
+});
+
+router.post(
+  "/photos",
+  upload.single("photo"),
+  async (req, res) => {
+    try {
+      const photo = new ProfilePicture(req.body);
+      const file = req.file.buffer;
+      photo.photo = file;
+
+      await photo.save();
+      res.status(201).send({ email: photo.email });
+    } catch (error) {
+      res.status(500).send({
+        upload_error: "Error while uploading file...Try again later.",
+      });
+    }
+  },
+  (error, req, res, next) => {
+    if (error) {
+      res.status(500).send({
+        upload_error: error.message,
+      });
+    }
+  }
+);
+
+router.get("/photos/:email", async (req, res) => {
+  try {
+    const result = await ProfilePicture.findOne({ email: req.params.email });
+    res.set("Content-Type", "image/jpeg");
+    res.send(result.photo);
+  } catch (error) {
+    res.status(400).send({ get_error: "Error while getting photo." });
+  }
+});
+
+//** User Registration**//
 router.post("/register", async (req, res) => {
   try {
-    let { name, email, password,skills, passwordCheck, profilePic, description } =
-      req.body;
-
+    let {
+      name,
+      email,
+      password,
+      skills,
+      passwordCheck,
+      description,
+    } = req.body;
 
     if (
       !email ||
@@ -41,11 +97,14 @@ router.post("/register", async (req, res) => {
       password: passwordHash,
       skills,
       name,
-      profilePic,
       description,
     });
     const savedUser = await newUser.save();
-    res.json(savedUser);
+    if (savedUser)
+      return res
+        .status(200)
+        .json({ msg: "Successfully Registered" });
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -126,20 +185,20 @@ router.get("/", auth, async (req, res) => {
 });
 
 //**** update account details ****//
-  router.route("/update/:id").post((req, res) => {
-    console.log("lo: "+req.body.skills)
-    User.findById(req.params.id)
-      .then((user) => {
-        user.name = req.body.name;
-        user.description = req.body.description;
-        user.skills = req.body.skills;
-        user
-          .save()
-          .then(() => res.json("Detail updated!"))
-          .catch((err) => res.status(400).json("Error: " + err));
-      })
-      .catch((err) => res.status(400).json("Error: " + err));
-  });
+router.route("/update/:id").post((req, res) => {
+  console.log("lo: " + req.body.skills);
+  User.findById(req.params.id)
+    .then((user) => {
+      user.name = req.body.name;
+      user.description = req.body.description;
+      user.skills = req.body.skills;
+      user
+        .save()
+        .then(() => res.json("Detail updated!"))
+        .catch((err) => res.status(400).json("Error: " + err));
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
 
 // router.route("/update/:id").post(function (req, res) {
 //   let user = new User(req.body);
@@ -202,11 +261,12 @@ router.get("/get-user/:id", async (req, res) => {
   try {
     let id = req.params.id;
 
-    await User.find({ _id: id }).exec().
-    then((user) => {
-      res.json(user);
-    })
-        .catch((err) => res.status(400).json("Error : " + err));
+    await User.find({ _id: id })
+      .exec()
+      .then((user) => {
+        res.json(user);
+      })
+      .catch((err) => res.status(400).json("Error : " + err));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -217,11 +277,12 @@ router.get("/getSkills/:id", async (req, res) => {
   try {
     let id = req.params.id;
 
-    await User.find({ _id: id } ,{ skills: 1,_id:0 }).exec().
-    then((user) => {
-      res.json(user);
-    })
-        .catch((err) => res.status(400).json("Error : " + err));
+    await User.find({ _id: id }, { skills: 1, _id: 0 })
+      .exec()
+      .then((user) => {
+        res.json(user);
+      })
+      .catch((err) => res.status(400).json("Error : " + err));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

@@ -120,7 +120,7 @@ export class Profile extends Component {
                 </div>
                 <div class="row">
                   <div class="mx-auto" style={{ width: "370px" }}>
-                    <Profilepic />
+                    <Profilepic email={item.email}/>
                   </div>
                 </div>
                 <h1 className="text-center" style={{ marginTop: "-35px" }}>

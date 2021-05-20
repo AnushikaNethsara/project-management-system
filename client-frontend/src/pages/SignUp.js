@@ -12,8 +12,6 @@ import Chip from "@material-ui/core/Chip";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
-
-
 class SignUp extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
@@ -30,38 +28,59 @@ class SignUp extends Component {
       conPassword: "",
       skills: [],
       fixedOptions: [SkillSet[2]],
-      profilePic: "",
+      profilePic: null,
       description: "",
-      backendError:''
+      backendError: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.hadleUpload = this.hadleUpload.bind(this);
+    this.uploadPhoto = this.uploadPhoto.bind(this);
   }
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  hadleUpload(e) {
+    this.setState({
+      profilePic: e.target.files[0],
+    });
+  }
+
+  uploadPhoto() {
+    const formData = new FormData();
+    formData.append("photo", this.state.profilePic);
+    formData.append("email", this.state.email);
+    Axios.post(constants.backend_url + "/users/photos", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  }
+
   async onSubmit(e) {
     e.preventDefault();
-    console.log("des: " + this.state.skills);
     let userData = {
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
       passwordCheck: this.state.conPassword,
-      profilePic: this.state.profilePic,
       skills: this.state.skills,
       description: this.state.description,
     };
     try {
-      const loginRes = await Axios.post(
+      const signUpRes = await Axios.post(
         constants.backend_url + "/users/register",
         userData
       );
-      this.props.history.push("/login");
+
+      if (signUpRes.data.msg === "Successfully Registered") {
+        this.uploadPhoto()
+        this.props.history.push("/login");
+      }
     } catch (err) {
       err.response.data.msg &&
-        this.state({ backendError: err.response.data.msg });
+        this.setState({ backendError: err.response.data.msg });
     }
   }
 
@@ -145,10 +164,13 @@ class SignUp extends Component {
                 ></Input>
 
                 <Form>
+                  <label>Profile Picture</label>
                   <Form.Group>
-                    <Form.File
-                      id="exampleFormControlFile1"
+                    <Form.Control
+                      type="file"
+                      name="photo"
                       label="Profile Picture"
+                      onChange={this.hadleUpload}
                     />
                   </Form.Group>
                 </Form>
