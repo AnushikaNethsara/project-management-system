@@ -10,7 +10,13 @@ router.post("/register", async (req, res) => {
       req.body;
 
 
-    if (!email || !password || !passwordCheck)
+    if (
+      !email ||
+      !password ||
+      !passwordCheck ||
+      skills.length === 0 ||
+      !description
+    )
       return res.status(400).json({ msg: "Not all fields have been entered." });
     if (password.length < 5)
       return res
@@ -75,14 +81,24 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.delete("/delete", auth, async (req, res) => {
+//***delete account***//
+router.delete("/delete/:id", async (req, res) => {
   try {
-    const deletedUser = await User.findByIdAndDelete(req.user);
+    const deletedUser = await User.findByIdAndDelete(req.params.id);
     res.json(deletedUser);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
+// router.delete("/delete", auth, async (req, res) => {
+//   try {
+//     const deletedUser = await User.findByIdAndDelete(req.user);
+//     res.json(deletedUser);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
 
 router.post("/tokenIsValid", async (req, res) => {
   try {
@@ -110,33 +126,32 @@ router.get("/", auth, async (req, res) => {
 });
 
 //**** update account details ****//
-router.post("/update/:id", async (req, res) => {
-  try {
-    await User.findById(req.params.id).then((user) => {
-      user.name = req.body.name;
-      user.skills=req.body.skills,
-      user.description = req.body.description;
-      user.profilePic = req.body.profilePic;
-      user
-        .save()
-        .then(() => res.status(200).json({ msg: "User Account Updated!" }))
-        .catch((err) => res.status(400).json({ error: err.message }));
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+  router.route("/update/:id").post((req, res) => {
+    console.log("lo: "+req.body.skills)
+    User.findById(req.params.id)
+      .then((user) => {
+        user.name = req.body.name;
+        user.description = req.body.description;
+        user.skills = req.body.skills;
+        user
+          .save()
+          .then(() => res.json("Detail updated!"))
+          .catch((err) => res.status(400).json("Error: " + err));
+      })
+      .catch((err) => res.status(400).json("Error: " + err));
+  });
 
-// router.route("/update").post(function (req, res) {
+// router.route("/update/:id").post(function (req, res) {
 //   let user = new User(req.body);
 //   user
 //     .updateOne(
-//       { email: user.email },
+//       { _id: req.params.id },
 //       {
 //         $set: {
 //           name: user.name,
-//           profilePic: user.profilePic,
-//           password: user.password,
+//           //profilePic: user.profilePic,
+//           description: user.description,
+//           skills: user.skills,
 //         },
 //       }
 //     )

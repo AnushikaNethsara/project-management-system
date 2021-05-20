@@ -32,6 +32,7 @@ class SignUp extends Component {
       fixedOptions: [SkillSet[2]],
       profilePic: "",
       description: "",
+      backendError:''
     };
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -59,7 +60,8 @@ class SignUp extends Component {
       );
       this.props.history.push("/login");
     } catch (err) {
-      err.response.data.msg && console.log(err.response.data.msg);
+      err.response.data.msg &&
+        this.state({ backendError: err.response.data.msg });
     }
   }
 
@@ -81,6 +83,9 @@ class SignUp extends Component {
                 <h3 className="text-center" style={{ paddingBottom: "20px" }}>
                   Sign Up
                 </h3>
+                <div className="conatiner text-center">
+                  <p className="text-danger">{this.state.backendError}</p>
+                </div>
                 <Input
                   name="name"
                   onChange={(e) => this.handleChange(e)}
@@ -125,7 +130,7 @@ class SignUp extends Component {
                       {...params}
                       label=""
                       variant="outlined"
-                      placeholder="Required Skills"
+                      placeholder="My Skills"
                     />
                   )}
                 />

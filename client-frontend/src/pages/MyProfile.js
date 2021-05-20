@@ -63,6 +63,23 @@ export class Profile extends Component {
         console.log(error);
       });
   }
+
+  deleteProfile() {
+    var userId = localStorage.getItem("auth-id");
+    Axios.delete(constants.backend_url + "/users/delete/" + userId)
+      .then((response) => {
+        console.log(response.data);
+        if (response.data) {
+          localStorage.setItem("auth-token", "");
+          localStorage.setItem("auth-id", "");
+          this.props.history.push("/");
+          window.location.reload();
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
   render() {
     return (
       <div
@@ -138,7 +155,14 @@ export class Profile extends Component {
                           <h6>Are you sure want to cancel your account?</h6>
                         </Modal.Body>
                         <Modal.Footer>
-                          <button class="btn btn-primary">Yes</button>
+                          <button
+                            onClick={() => {
+                              this.deleteProfile();
+                            }}
+                            class="btn btn-primary"
+                          >
+                            Yes
+                          </button>
                           <button
                             type="button"
                             class="btn btn-primary"
@@ -176,7 +200,7 @@ export class Profile extends Component {
 
                 <div class="row">
                   <div
-                    class="container shadow-sm p-3 mb-3 bg-body rounded bg-light text-dark"
+                    class="container shadow-sm p-3 mb-3 bg-body rounded bg-light text-dark text-center"
                     style={{ width: "600px", marginTop: "35PX" }}
                   >
                     <br></br>
@@ -200,12 +224,17 @@ export class Profile extends Component {
                 </div>
                 <div className="row text-center">
                   <div
-                    className="container shadow-sm p-3 mb-5 bg-body rounded bg-light text-dark"
-                    style={{ width: "600px", marginTop: "5PX" }}
+                    className="container shadow-sm p-3 mb-5 bg-body rounded bg-light text-dark "
+                    style={{ width: "600px", marginTop: "5PX",margin:'auto' }}
                   >
                     <h3>Skills</h3>
                     <br></br>
-                    <Chip></Chip>
+                    <div className="row">
+                      {item.skills &&
+                        item.skills.map((item) => {
+                          return <Chip skill={item} key={item._id} />;
+                        })}
+                    </div>
                   </div>
                 </div>
 

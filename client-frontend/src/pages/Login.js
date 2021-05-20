@@ -12,6 +12,7 @@ const Login = () => {
     password: "",
   });
   const { setUserData } = useContext(UserContext);
+  const [backendError, setBackendError] = useState();
   const history = useHistory();
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,7 +38,7 @@ const Login = () => {
       localStorage.setItem("auth-id", loginRes.data.user.id);
       history.push("/my-profile");
     } catch (err) {
-      err.response.data.msg && console.log(err.response.data.msg);
+      err.response.data.msg && setBackendError(err.response.data.msg);
     }
   };
   return (
@@ -52,6 +53,9 @@ const Login = () => {
               <h3 className="text-center" style={{ paddingBottom: "40px" }}>
                 Log In {values.email}
               </h3>
+              <div className="conatiner text-center">
+                <p className="text-danger">{backendError}</p>
+              </div>
               <Input
                 name="email"
                 onChange={(e) => handleChange(e)}

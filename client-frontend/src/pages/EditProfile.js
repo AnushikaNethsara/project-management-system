@@ -9,7 +9,6 @@ import Chip from "@material-ui/core/Chip";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
-
 class EditProfile extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
@@ -46,6 +45,7 @@ class EditProfile extends Component {
           this.setState({
             name: item.name,
             description: item.description,
+            skills: item.skills,
           });
         });
       })
@@ -54,16 +54,15 @@ class EditProfile extends Component {
       });
   }
 
-
-
   async onSubmit(e) {
     e.preventDefault();
+    console.log("SK: " + this.state.skills);
     var userId = localStorage.getItem("auth-id");
     console.log("sub: " + this.state.skills);
     let userData = {
       name: this.state.name,
       profilePic: this.state.profilePic,
-      //skills: this.state.skills,
+      skills: this.state.skills,
       description: this.state.description,
     };
     try {
@@ -87,7 +86,7 @@ class EditProfile extends Component {
             <h3 className="text-center">EDIT PROFILE</h3>
             <br></br>
             <div class="container-sm   text-dark ">
-              <form>
+              <form onSubmit={this.onSubmit}>
                 <div className="mb-3">
                   <label htmlFor="exampleInputEmail1" className="form-label">
                     <h4>Name</h4>
@@ -98,6 +97,7 @@ class EditProfile extends Component {
                     type="text"
                     className="form-control"
                     value={this.state.name}
+                    required
                   />
                 </div>
                 <div className="mb-3">
@@ -133,7 +133,7 @@ class EditProfile extends Component {
                         {...params}
                         label=""
                         variant="outlined"
-                        placeholder="Required Skills"
+                        placeholder="My Skills"
                       />
                     )}
                   />
@@ -151,6 +151,7 @@ class EditProfile extends Component {
                       class="form-control"
                       id="exampleFormControlTextarea1"
                       rows="3"
+                      required
                     ></textarea>
                   </div>
                 </div>
@@ -165,10 +166,7 @@ class EditProfile extends Component {
                 <br></br>
                 <div className="container">
                   <div className="row">
-                    <button
-                      onClick={this.onSubmit}
-                      className="btn btn-primary "
-                    >
+                    <button type="submit" className="btn btn-primary ">
                       Edit Project
                     </button>
                     <Link to="/my-profile">

@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Chips() {
+export default function Chips(props) {
   const classes = useStyles();
 
   const handleDelete = () => {
@@ -28,14 +28,8 @@ export default function Chips() {
   };
 
   return (
-    <div className={classes.root}>
-      <Chip label="HTML" />
-      <Chip label="CSS" />
-      <Chip label="JavaScript" />
-      <Chip label="XML" />
-      <Chip label="MongoDB" />
-      <Chip label="PHP" />
-      <Chip label="JAVA" />
+    <div className={classes.root} style={{margin:"auto"}}>
+      <Chip label={props.skill} />
     </div>
   );
 }

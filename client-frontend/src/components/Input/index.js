@@ -15,6 +15,7 @@ function Input(props) {
           as={props.as}
           rows={props.rows}
           name={props.name}
+          required={true}
         />
         <Form.Text className="text-muted">{props.error}</Form.Text>
       </Form.Group>
