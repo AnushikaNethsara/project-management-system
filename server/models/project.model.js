@@ -4,16 +4,18 @@ const projectSchema = new mongoose.Schema({
   seller_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
-    required:true
+    required: true,
   },
   buyer_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
-    required:true
+    required: false,
   },
-  skills:[{
-    type:String
-  }],
+  skills: [
+    {
+      type: String,
+    },
+  ],
   price: { type: Number, required: true },
   title: { type: String, required: true },
   description: { type: String, required: true },
