@@ -4,7 +4,16 @@ import bg2 from "../img/bg2.jpg";
 import { Box, Grid, Paper, Typography, Button } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
 import Feedback from "../components/Feedback/Feedback";
-import { Nav, form, Image, Col, Row, Container, Card } from "react-bootstrap";
+import {
+  Nav,
+  form,
+  Image,
+  Col,
+  Row,
+  Container,
+  Card,
+  Modal,
+} from "react-bootstrap";
 import bio from "../img/bio.png";
 import { alignPropType } from "react-bootstrap/esm/DropdownMenu";
 import Profilepic from "../components/ProfileCircle/ProfileCircle";
@@ -15,6 +24,16 @@ import Axios from "axios";
 import { Link } from "react-router-dom";
 
 export class Example extends Component {
+  constructor() {
+    super();
+    this.state = {
+      show: false,
+    };
+  }
+
+  handleModal() {
+    this.setState({ show: !this.state.show });
+  }
 
   render() {
     return (
@@ -69,7 +88,36 @@ export class Example extends Component {
           </div>
           <div className="text-center my-3">
             <Box display="flex" justifyContent="center">
-              <Button variant="contained">Delete Profile</Button>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  this.handleModal();
+                }}
+              >
+                Delete Profile
+              </Button>
+              <Modal
+                id="one"
+                show={this.state.show}
+                onHide={() => this.handleModal()}
+              >
+                <Modal.Body>
+                  <h6>are you Sure?</h6>
+                </Modal.Body>
+                <Modal.Footer>
+                  <button
+                    class="btn btn-primary"
+                    onClick={() => {
+                      this.handleModal();
+                    }}
+                  >
+                    close
+                  </button>
+                  <button type="button" class="btn btn-primary">
+                    Yes
+                  </button>
+                </Modal.Footer>
+              </Modal>
             </Box>
           </div>
           <br></br>
