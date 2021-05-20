@@ -10,6 +10,7 @@ const AfterLoginNav = () => {
   const logout = () => {
       console.log("logout: ")
     localStorage.setItem("auth-token", "");
+    localStorage.setItem("auth-id", "");
     history.push("/");
     window.location.reload();
     console.log("logout2: ");
@@ -60,11 +61,11 @@ const AfterLoginNav = () => {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink to="/my-projects" className="nav-link">
+                <NavLink to="/my-profile" className="nav-link">
                   <i className="fa fa-user-plus"></i>&nbsp; My Account
                 </NavLink>
               </li>
-              <li className="nav-item" onClick={()=>logout()}>
+              <li className="nav-item" onClick={() => logout()}>
                 <NavLink to="/login" className="nav-link">
                   <i className="fa fa-sign-in"></i>&nbsp; Log Out
                 </NavLink>
