@@ -113,8 +113,7 @@ export class Profile extends Component {
                     class="container-sm  shadow p-3 mb-5 bg-body rounded bg-light text-dark "
                     style={{
                       marginTop: "30px",
-                      width: "530px",
-                      marginTop: "100PX",
+                      width: "530px"
                     }}
                   ></div>
                 </div>

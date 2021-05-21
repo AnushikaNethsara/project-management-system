@@ -104,4 +104,20 @@ router.get("/getProjectSkills/:id", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+//*** get project based on skills ***//
+router.get("/onSearch/:skill", async (req, res) => {
+  try {
+    let skill = req.params.skill;
+
+    await Project.find({ skills: skill })
+        .exec()
+        .then((project) => {
+          res.json(project);
+        })
+        .catch((err) => res.status(400).json("Error : " + err));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 module.exports = router;

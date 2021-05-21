@@ -60,7 +60,7 @@ const App = () => {
         <Route path="/" exact component={Home} />
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={Login} />
-        <Route path="/search" component={Search} />
+        <Route path="/search/:keyword" component={Search} />
         <Route path="/project-overview/:id" component={ProjectOverView} />
         <Route path="/post-project" component={PostProject} />
         <Route path="/payment-page" component={PaymentPage} />

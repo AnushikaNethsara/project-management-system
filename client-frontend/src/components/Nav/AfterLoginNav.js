@@ -1,9 +1,11 @@
 import React from "react";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import {Navbar, Nav, Container, Form,FormControl,Button} from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../img/logo.png";
 import "./navbar.css";
 import { useHistory } from "react-router-dom";
+
+
 
 const AfterLoginNav = () => {
   const history = useHistory();
@@ -40,16 +42,11 @@ const AfterLoginNav = () => {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto"></Nav>
             <Nav>
-              {/* <Form inline>
-                <FormControl
-                  type="text"
-                  placeholder="Search"
-                  className="mr-sm-2"
-                />
-                <Button variant="outline-light">Search</Button>
-              </Form> */}
+              <Form inline>
+                <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+              </Form>
               <li className="nav-item">
-                <NavLink to="/search" className="nav-link">
+                <NavLink to="/search/:keyword" className="nav-link">
                   <i className="fa fa-search" />
                   &nbsp; Search
                 </NavLink>
