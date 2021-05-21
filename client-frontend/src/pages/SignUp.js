@@ -35,7 +35,6 @@ class SignUp extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.hadleUpload = this.hadleUpload.bind(this);
-    this.uploadPhoto = this.uploadPhoto.bind(this);
   }
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -47,40 +46,52 @@ class SignUp extends Component {
     });
   }
 
-  uploadPhoto() {
-    const formData = new FormData();
-    formData.append("photo", this.state.profilePic);
-    formData.append("email", this.state.email);
-    Axios.post(constants.backend_url + "/users/photos", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-  }
-
   async onSubmit(e) {
     e.preventDefault();
-    let userData = {
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password,
-      passwordCheck: this.state.conPassword,
-      skills: this.state.skills,
-      description: this.state.description,
-    };
-    try {
-      const signUpRes = await Axios.post(
-        constants.backend_url + "/users/register",
-        userData
-      );
 
-      if (signUpRes.data.msg === "Successfully Registered") {
-        this.uploadPhoto()
-        this.props.history.push("/login");
-      }
+    if (
+      this.state.name === "" ||
+      this.state.email === "" ||
+      this.state.password === "" ||
+      this.state.conPassword === "" ||
+      this.state.skills === "" ||
+      this.state.skills === ""
+    ) {
+      return this.setState({
+        backendError: "Not all fields have been entered.",
+      });
+    }
+
+    const formData = new FormData();
+    formData.append("name", this.state.name);
+    formData.append("email", this.state.email);
+    formData.append("password", this.state.password);
+    formData.append("passwordCheck", this.state.conPassword);
+    formData.append("skills", this.state.skills);
+    formData.append("description", this.state.description);
+    formData.append("photo", this.state.profilePic);
+    console.log("da: " + formData);
+    try {
+      const signUpRes = Axios.post(
+        constants.backend_url + "/users/register",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      ).then((res) => {
+        if (res.data.msg === "Successfully Registered") {
+          this.props.history.push("/login");
+        }else{
+          this.setState({
+            backendError: "Something went wrong",
+          });
+        }
+      });
     } catch (err) {
       err.response.data.msg &&
-        this.setState({ backendError: err.response.data.msg });
+        this.setState({ backendError: "Something went wrong" });
     }
   }
 

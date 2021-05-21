@@ -23,6 +23,7 @@ class NewProject extends Component {
     this.onChangeSkills = this.onChangeSkills.bind(this);
     this.onChangePrice = this.onChangePrice.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.hadleUpload = this.hadleUpload.bind(this);
 
     this.state = {
       //state used to like create variable and store data. here is like initialising all the attributes with initial values, like (let username = ' ';)
@@ -30,6 +31,7 @@ class NewProject extends Component {
       description: "",
       skills: [],
       price: "0",
+      photo: null,
       fixedOptions: [SkillSet[2]],
     };
   }
@@ -54,24 +56,28 @@ class NewProject extends Component {
     this.setState({ price: e.target.value });
   }
 
+  hadleUpload(e) {
+    this.setState({
+      photo: e.target.files[0],
+    });
+  }
+
   onSubmit(e) {
     e.preventDefault();
-    console.log("des: " + this.state.skills);
 
-    const project = {
-      title: this.state.title,
-      description: this.state.description,
-      skills: this.state.skills,
-      price: this.state.price,
-      seller_id: localStorage.getItem("auth-id"),
-    };
-
-    console.log(project);
-
-    //sending data to the mongodb dtabase with axios
-    axios
-      .post("http://localhost:5008/project/add", project)
-      .then((res) => console.log(res.data));
+    const formData = new FormData();
+    formData.append("title", this.state.title);
+    formData.append("description", this.state.description);
+    formData.append("skills", this.state.skills);
+    formData.append("price", this.state.price);
+    formData.append("owner_id", localStorage.getItem("auth-id"));
+    //formData.append("worker_id", "");
+    formData.append("photo", this.state.photo);
+    axios.post(constants.backend_url + "/project/add", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     window.location = "/my-projects";
   }
@@ -172,28 +178,19 @@ class NewProject extends Component {
                     onChange={this.onChangePrice}
                   />
                 </div>
-                {/*  <h4>Attachments</h4>
-                <div className="input-group mb-3">
+                <div className="mb-3">
+                  <label htmlFor="exampleInputEmail1" className="form-label">
+                    <h4>Project Photo</h4>
+                  </label>
                   <input
+                    required
                     type="file"
                     className="form-control"
-                    id="inputGroupFile02"
+                    aria-describedby="emailHelp"
+                    onChange={this.hadleUpload}
                   />
                 </div>
-                <div className="input-group mb-3">
-                  <input
-                    type="file"
-                    className="form-control"
-                    id="inputGroupFile02"
-                  />
-                </div>
-                <div className="input-group mb-3">
-                  <input
-                    type="file"
-                    className="form-control"
-                    id="inputGroupFile02"
-                  />
-                </div> */}
+
                 <br></br>
                 <button type="submit" className="btn btn-primary ">
                   Post Project

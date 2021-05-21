@@ -1,15 +1,19 @@
 const mongoose = require("mongoose");
 
 const projectSchema = new mongoose.Schema({
-  seller_id: {
+  owner_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
     required: true,
   },
-  buyer_id: {
+  worker_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
     required: false,
+  },
+  photo: {
+    type: Buffer,
+    required: true,
   },
   skills: [
     {
@@ -22,3 +26,4 @@ const projectSchema = new mongoose.Schema({
 });
 
 module.exports = Project = mongoose.model("project", projectSchema);
+//

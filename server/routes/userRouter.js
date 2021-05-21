@@ -18,55 +18,14 @@ const upload = multer({
   },
 });
 
-router.post(
-  "/photos",
-  upload.single("photo"),
-  async (req, res) => {
-    try {
-      const photo = new ProfilePicture(req.body);
-      const file = req.file.buffer;
-      photo.photo = file;
-
-      await photo.save();
-      res.status(201).send({ email: photo.email });
-    } catch (error) {
-      res.status(500).send({
-        upload_error: "Error while uploading file...Try again later.",
-      });
-    }
-  },
-  (error, req, res, next) => {
-    if (error) {
-      res.status(500).send({
-        upload_error: error.message,
-      });
-    }
-  }
-);
-
-router.get("/photos/:email", async (req, res) => {
-  try {
-    const result = await ProfilePicture.findOne({ email: req.params.email });
-    res.set("Content-Type", "image/jpeg");
-    res.send(result.photo);
-  } catch (error) {
-    res.status(400).send({ get_error: "Error while getting photo." });
-  }
-});
-
 //** User Registration**//
-router.post("/register", async (req, res) => {
+router.post("/register", upload.single("photo"), async (req, res) => {
+  console.log(req.body);
   try {
-    let {
-      name,
-      email,
-      password,
-      skills,
-      passwordCheck,
-      description,
-    } = req.body;
-
+    let { name, email, password, skills, passwordCheck, description } =
+      req.body;
     if (
+      !name ||
       !email ||
       !password ||
       !passwordCheck ||
@@ -74,10 +33,18 @@ router.post("/register", async (req, res) => {
       !description
     )
       return res.status(400).json({ msg: "Not all fields have been entered." });
-    if (password.length < 5)
-      return res
-        .status(400)
-        .json({ msg: "The password needs to be at least 5 characters long." });
+
+      if (req.file.buffer===undefined)
+       return res
+         .status(400)
+         .json({ msg: "Please Upload a photo" });
+
+        if (password.length < 5)
+          return res
+            .status(400)
+            .json({
+              msg: "The password needs to be at least 5 characters long.",
+            });
     if (password !== passwordCheck)
       return res
         .status(400)
@@ -99,21 +66,31 @@ router.post("/register", async (req, res) => {
       name,
       description,
     });
+
+    const file = req.file.buffer;
+    newUser.photo = file;
+
     const savedUser = await newUser.save();
     if (savedUser)
-      return res
-        .status(200)
-        .json({ msg: "Successfully Registered" });
-
+      return res.status(200).json({ msg: "Successfully Registered" });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ msg: err.message });
+  }
+});
+
+router.get("/photo/:id", async (req, res) => {
+  try {
+    const result = await User.findOne({ _id: req.params.id });
+    res.set("Content-Type", "image/jpeg");
+    res.send(result.photo);
+  } catch (error) {
+    res.status(400).send({ get_error: "Error while getting photo." });
   }
 });
 
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(email);
     // validate
     if (!email || !password)
       return res.status(400).json({ msg: "Not all fields have been entered." });
@@ -150,14 +127,7 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-// router.delete("/delete", auth, async (req, res) => {
-//   try {
-//     const deletedUser = await User.findByIdAndDelete(req.user);
-//     res.json(deletedUser);
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
+
 
 router.post("/tokenIsValid", async (req, res) => {
   try {

@@ -6,52 +6,63 @@ import { Card, Row, Col, Image, ButtonGroup, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import mern from "../img/mern.jpg";
+import constants from "../constants/constants";
 
 //creating Project functional component(not a class component)
 const Project = (props) => (
-  <Card>
-    <Card.Header as="h5">{props.project.title}</Card.Header>
-    <Card.Body>
-      <Row>
-        <Col sm={4}>
-          <Link to={"/project-overview/" + props.project._id}>
-            {/* <Image src={props.project.image} thumbnail /> */}
-          </Link>
-        </Col>
-        <Col sm={8}>
-          <Link to={"/project-overview/" + props.project._id}>
-            <Card.Text>{props.project.description}</Card.Text>
-            <Card.Text>{props.project.skills}</Card.Text>
-            <Card.Text>{props.project.price}</Card.Text>
-          </Link>
-        </Col>
-      </Row>
-      <br></br>
-      <Link
-        className="btn btn-primary"
-        to={"/project-overview/" + props.project._id}
-      >
-        Full Details
-      </Link>
-      &nbsp;
-      <ButtonGroup>
+  <div className="mt-3">
+    <Card>
+      <Card.Header as="h5">{props.project.title}</Card.Header>
+      <Card.Body>
+        <Row>
+          <Col sm={4}>
+            <Link to={"/project-overview/" + props.project._id}>
+              <div style={{height:"70%",width:"80%"}}>
+                <Image
+                  src={
+                    constants.backend_url +
+                    `/project/photo/${props.project._id}`
+                  }
+                  thumbnail
+                />
+              </div>
+            </Link>
+          </Col>
+          <Col sm={8}>
+            <Link to={"/project-overview/" + props.project._id}>
+              <Card.Text>{props.project.description}</Card.Text>
+              <Card.Text>{props.project.skills}</Card.Text>
+              <Card.Text>{props.project.price}</Card.Text>
+            </Link>
+          </Col>
+        </Row>
+        <br></br>
         <Link
-          className="btn btn-success"
-          to={"/edit-project/" + props.project._id}
+          className="btn btn-primary"
+          to={"/project-overview/" + props.project._id}
         >
-          <i className="fa fa-edit" />
+          Full Details
         </Link>
-        <Button
-          className="btn btn-danger"
-          onClick={() => {
-            props.deleteProject(props.project._id);
-          }}
-        >
-          <i className="fa fa-trash" />
-        </Button>
-      </ButtonGroup>
-    </Card.Body>
-  </Card>
+        &nbsp;
+        <ButtonGroup>
+          <Link
+            className="btn btn-success"
+            to={"/edit-project/" + props.project._id}
+          >
+            <i className="fa fa-edit" />
+          </Link>
+          <Button
+            className="btn btn-danger"
+            onClick={() => {
+              props.deleteProject(props.project._id);
+            }}
+          >
+            <i className="fa fa-trash" />
+          </Button>
+        </ButtonGroup>
+      </Card.Body>
+    </Card>
+  </div>
 );
 
 class MyProjects extends Component {
@@ -66,7 +77,11 @@ class MyProjects extends Component {
   componentDidMount() {
     //getting all the projects and puting in the projects array we declared in the constructor
     axios
-      .get("http://localhost:5008/project/")
+      .get(
+        constants.backend_url +
+          "/project/get-my-projects/" +
+          localStorage.getItem("auth-id")
+      )
       .then((res) => this.setState({ projects: res.data }))
       .catch((err) => {
         console.log(err);
@@ -108,7 +123,6 @@ class MyProjects extends Component {
           <br></br>
           {this.projectList()}
           <br></br>
-          <MyPagination></MyPagination>
         </Container>
       </div>
     );
