@@ -1,16 +1,23 @@
-import React from "react";
-import {Navbar, Nav, Container, Form,FormControl,Button} from "react-bootstrap";
+import React, { useState } from "react";
+import {
+  Navbar,
+  Nav,
+  Container,
+  Form,
+  FormControl,
+  Button,
+} from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../img/logo.png";
 import "./navbar.css";
 import { useHistory } from "react-router-dom";
 
-
-
 const AfterLoginNav = () => {
   const history = useHistory();
+  const [searchKeyword, setSearchKeyword] = useState("");
+
   const logout = () => {
-      console.log("logout: ")
+    console.log("logout: ");
     localStorage.setItem("auth-token", "");
     localStorage.setItem("auth-id", "");
     history.push("/");
@@ -43,10 +50,17 @@ const AfterLoginNav = () => {
             <Nav className="mr-auto"></Nav>
             <Nav>
               <Form inline>
-                <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+                <FormControl
+                  type="text"
+                  placeholder="Search"
+                  className="mr-sm-2"
+                  onChange={(e) => {
+                    setSearchKeyword(e.target.value);
+                  }}
+                />
               </Form>
               <li className="nav-item">
-                <NavLink to="/search/:keyword" className="nav-link">
+                <NavLink to={"/search/" + searchKeyword} className="nav-link">
                   <i className="fa fa-search" />
                   &nbsp; Search
                 </NavLink>
