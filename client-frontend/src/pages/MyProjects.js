@@ -16,8 +16,8 @@ const Project = (props) => (
       <Card.Body>
         <Row>
           <Col sm={4}>
-            <Link to={"/project-overview/" + props.project._id}>
-              <div style={{height:"70%",width:"80%"}}>
+            <Link to={"/my-project-overview/" + props.project._id}>
+              <div style={{ height: "70%", width: "80%" }}>
                 <Image
                   src={
                     constants.backend_url +
@@ -29,18 +29,13 @@ const Project = (props) => (
             </Link>
           </Col>
           <Col sm={8}>
-            <Link to={"/project-overview/" + props.project._id}>
-              <Card.Text>{props.project.description}</Card.Text>
-              <Card.Text>{props.project.skills}</Card.Text>
-              <Card.Text>{props.project.price}</Card.Text>
-            </Link>
+            <Card.Text>{props.project.description}</Card.Text>
+            <Card.Text>{props.project.skills}</Card.Text>
+            <Card.Text>{props.project.price}</Card.Text>
           </Col>
         </Row>
         <br></br>
-        <Link
-          className="btn btn-primary"
-          to={"/project-overview/" + props.project._id}
-        >
+        <Link to={"/my-project-overview/" + props.project._id}>
           Full Details
         </Link>
         &nbsp;

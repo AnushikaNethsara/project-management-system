@@ -3,7 +3,6 @@ const Project = require("../models/project.model");
 const ProjectSkill = require("../models/projectSkill.model");
 const multer = require("multer");
 
-
 const upload = multer({
   limits: {
     fileSize: 1000000, // max file size 1MB = 1000000 bytes
@@ -15,20 +14,6 @@ const upload = multer({
     cb(undefined, true); // continue with upload
   },
 });
-
-//*** add project ****//
-// router.post("/add", upload.single("photo"), async (req, res) => {
-//   try {
-//     const photo = new Project(req.body);
-//     const file = req.file.buffer;
-//     photo.photo = file;
-
-//     await photo.save();
-//     res.status(200).send(photo);
-//   } catch (err) {
-//     res.status(400).json({ error: err.message });
-//   }
-// });
 
 // //*** add project ****//
 router.post(
@@ -58,7 +43,6 @@ router.post(
   }
 );
 
-
 //*** get project details by id ***//
 router.get("/get-my-projects/:id", async (req, res) => {
   try {
@@ -76,7 +60,6 @@ router.get("/get-my-projects/:id", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
 
 //**get project photo  **//
 router.get("/photo/:projectId", async (req, res) => {
@@ -130,8 +113,8 @@ router.get("/get-details/:id", async (req, res) => {
     let projectId = req.params.id;
     //with one populate this didn't work
     await Project.find({ _id: projectId })
-      .populate("seller_id")
-      .populate("buyer_id")
+      .populate("owner_id")
+      .populate("workers_ids")
       .exec()
       .then((detail) => {
         res.json(detail);
@@ -147,8 +130,8 @@ router.get("/", async (req, res) => {
   try {
     //with one populate this didn't work
     await Project.find()
-      .populate("seller_id")
-      .populate("buyer_id")
+      .populate("owner_id")
+      .populate("workers_ids")
       .exec()
       .then((project) => {
         res.json(project);
@@ -186,6 +169,55 @@ router.get("/onSearch/:skill", async (req, res) => {
         res.json(project);
       })
       .catch((err) => res.status(400).json("Error : " + err));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ***Request for a job  ***//
+router.post("/request", async (req, res) => {
+  try {
+    let { projectId, workers_ids } = req.body;
+    let current_workers = [];
+
+    await Project.findOne({ _id: projectId }).then((detail) => {
+      current_workers = detail.workers_ids;
+      if (current_workers.includes(workers_ids)) {
+        res.status(200).json({ msg: "Already requested" });
+      } else {
+        current_workers.push(workers_ids);
+        Project.updateOne(
+          { _id: projectId },
+          {
+            $set: {
+              workers_ids: current_workers,
+            },
+          }
+        ).then((sup) => {
+          res.status(200).json({ msg: "successful" });
+        });
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+// *** check requested job or not ***//
+router.post("/check-request", async (req, res) => {
+  try {
+    let { projectId, workers_ids } = req.body;
+    let current_workers = [];
+
+    await Project.findOne({ _id: projectId }).then((detail) => {
+      current_workers = detail.workers_ids;
+      if (current_workers.includes(workers_ids)) {
+        res.status(200).json({ msg: "Already requested" });
+      } else {
+        res.status(200).json({ msg: "Not requested" });
+      }
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

@@ -7,7 +7,7 @@ import constants from "../constants/constants";
 import { Card, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-class ProjectOverview extends Component {
+class MyProjectOverview extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
@@ -24,10 +24,8 @@ class ProjectOverview extends Component {
       price: "0",
       owner_id: "",
       workers_ids: "",
-      request: false,
     };
     this.requestProject = this.requestProject.bind(this);
-    this.checkRequest = this.checkRequest.bind(this);
   }
 
   requestProject() {
@@ -38,7 +36,6 @@ class ProjectOverview extends Component {
         projectId: this.props.match.params.id,
         workers_ids: localStorage.getItem("auth-id"),
       });
-      window.location.reload();
     }
   }
 
@@ -60,32 +57,11 @@ class ProjectOverview extends Component {
           skills: res.data[0].skills,
           workers_ids: res.data[0].workers_ids,
         });
-        this.checkRequest();
       })
       .catch(function (err) {
         console.log(err);
       });
     //console.log("work: " + res.data);
-  }
-
-  checkRequest() {
-    axios
-      .post(constants.backend_url + "/project/check-request", {
-        projectId: this.props.match.params.id,
-        workers_ids: localStorage.getItem("auth-id"),
-      })
-      .then((res) => {
-        console.log("res: " + res.data.msg);
-        if (res.data.msg === "Not requested") {
-          this.setState({
-            request: false,
-          });
-        } else {
-          this.setState({
-            request: true,
-          });
-        }
-      });
   }
 
   render() {
@@ -131,45 +107,45 @@ class ProjectOverview extends Component {
                   </h5>
                 </div>
               </div>
-              <div class="container-sm">
+
+              <div class="container-sm mt-5">
                 <div className="row">
-                  <Link
-                    to={"/profile-view/" + this.state.owner_id._id}
-                    className="text-primary"
-                    style={{ textDecoration: "underline" }}
-                  >
-                    View owner account
-                  </Link>
+                  <h5 className="text">Requests</h5>
                 </div>
+
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.workers_ids &&
+                      this.state.workers_ids.map((item, index) => {
+                        return (
+                          <tr key={item}>
+                            <th scope="row">{index + 1}</th>
+                            <td>{item.name}</td>
+                            <td>{item.email}</td>
+                            <td>
+                              <Link
+                                to={"/profile-view/" + item._id}
+                                className="text-primary"
+                                style={{ textDecoration: "underline" }}
+                              >
+                                View
+                              </Link>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                  </tbody>
+                </table>
               </div>
-              <div style={{ width: "100%" }}>
-                {this.state.owner_id != localStorage.getItem("auth-id") &&
-                this.state.request === false ? (
-                  <Box
-                    onClick={this.requestProject}
-                    display="flex"
-                    flexDirection="row-reverse"
-                    p={1}
-                    m={1}
-                  >
-                    <Button variant="contained">Request Job</Button>
-                  </Box>
-                ) : (
-                  [
-                    this.state.request === true ? (
-                      <Box
-                        display="flex"
-                        flexDirection="row-reverse"
-                        p={1}
-                        m={1}
-                      >
-                        <Button variant="contained">Requested</Button>
-                      </Box>
-                    ) : null,
-                    <></>,
-                  ]
-                )}
-              </div>
+
               <br></br>
               <br></br>
             </div>
@@ -187,4 +163,4 @@ class ProjectOverview extends Component {
   }
 }
 
-export default ProjectOverview;
+export default MyProjectOverview;

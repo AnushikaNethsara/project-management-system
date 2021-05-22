@@ -45,7 +45,7 @@ class Search extends Component {
                         title="Project Title"
                         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                         price="50"
-                    ></MyCard>
+                    />
                   </Col>
 
                 </Row>

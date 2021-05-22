@@ -19,6 +19,8 @@ import Axios from "axios";
 import Profile from "./pages/MyProfile";
 import EditProfile from "./pages/EditProfile";
 import Example from "./pages/Example";
+import MyProjectOverview from "./pages/MyProjectOverview";
+import ProfileView from "./pages/ProfileView";
 
 const App = () => {
   const [userData, setUserData] = useState({
@@ -71,6 +73,8 @@ const App = () => {
         <Route path="/my-profile" component={Profile} />
         <Route path="/example" component={Example} />
         <Route path="/edit-profile" component={EditProfile} />
+        <Route path="/my-project-overview/:id" component={MyProjectOverview} />
+        <Route path="/profile-view/:id" component={ProfileView} />
       </UserContext.Provider>
     </Router>
   );

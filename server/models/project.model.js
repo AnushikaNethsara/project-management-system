@@ -6,11 +6,13 @@ const projectSchema = new mongoose.Schema({
     ref: "user",
     required: true,
   },
-  worker_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
-    required: false,
-  },
+  workers_ids: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+      required: false,
+    },
+  ],
   photo: {
     type: Buffer,
     required: true,

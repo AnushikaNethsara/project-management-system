@@ -31,6 +31,7 @@ class NewProject extends Component {
       description: "",
       skills: [],
       price: "0",
+      workers_ids:[null],
       photo: null,
       fixedOptions: [SkillSet[2]],
     };
@@ -71,7 +72,6 @@ class NewProject extends Component {
     formData.append("skills", this.state.skills);
     formData.append("price", this.state.price);
     formData.append("owner_id", localStorage.getItem("auth-id"));
-    //formData.append("worker_id", "");
     formData.append("photo", this.state.photo);
     axios.post(constants.backend_url + "/project/add", formData, {
       headers: {
