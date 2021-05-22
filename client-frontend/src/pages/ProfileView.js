@@ -34,12 +34,16 @@ export class ProfileView extends Component {
     this.state = {
       values: [],
       show: false,
+      type: "",
     };
     this.getAccountDeatils = this.getAccountDeatils.bind(this);
   }
 
   componentDidMount() {
     this.getAccountDeatils();
+    this.setState({
+      type: this.props.match.params.type,
+    });
   }
 
   getAccountDeatils() {
@@ -104,6 +108,17 @@ export class ProfileView extends Component {
                   {item.name}
                 </h1>
                 <h5 className="text-center text-muted">{item.email}</h5>
+                <div className="text-center my-3">
+                  {/* <Link to="edit-profile"> */}
+                  {this.state.type === "worker" ? (
+                    <Box display="flex" justifyContent="center">
+                      <Button variant="contained">Pay Now</Button>
+                    </Box>
+                  ) : (
+                    <></>
+                  )}
+                  {/* </Link> */}
+                </div>
 
                 <br></br>
 

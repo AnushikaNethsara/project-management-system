@@ -132,7 +132,7 @@ class MyProjectOverview extends Component {
                             <td>{item.email}</td>
                             <td>
                               <Link
-                                to={"/profile-view/" + item._id}
+                                to={"/profile-view/" + item._id+"/worker"}
                                 className="text-primary"
                                 style={{ textDecoration: "underline" }}
                               >

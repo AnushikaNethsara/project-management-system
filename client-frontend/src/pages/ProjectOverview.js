@@ -134,7 +134,7 @@ class ProjectOverview extends Component {
               <div class="container-sm">
                 <div className="row">
                   <Link
-                    to={"/profile-view/" + this.state.owner_id._id}
+                    to={"/profile-view/" + this.state.owner_id._id+"/viewer"}
                     className="text-primary"
                     style={{ textDecoration: "underline" }}
                   >
