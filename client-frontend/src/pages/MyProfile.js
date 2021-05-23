@@ -88,7 +88,7 @@ export class Profile extends Component {
       >
         <img
           src={bg2}
-          style={{ width: "97.2%", height: "20%", position: "absolute" }}
+          style={{ width: "97.2%", height: "300px", position: "absolute" }}
         ></img>
         {this.state.values.length > 0 &&
           this.state.values.map((item) => {
@@ -113,13 +113,13 @@ export class Profile extends Component {
                     class="container-sm  shadow p-3 mb-5 bg-body rounded bg-light text-dark "
                     style={{
                       marginTop: "30px",
-                      width: "530px"
+                      width: "530px",
                     }}
                   ></div>
                 </div>
                 <div class="row">
                   <div class="mx-auto" style={{ width: "370px" }}>
-                    <Profilepic id={item._id}/>
+                    <Profilepic id={item._id} />
                   </div>
                 </div>
                 <h1 className="text-center" style={{ marginTop: "-35px" }}>
@@ -224,7 +224,7 @@ export class Profile extends Component {
                 <div className="row text-center">
                   <div
                     className="container shadow-sm p-3 mb-5 bg-body rounded bg-light text-dark "
-                    style={{ width: "600px", marginTop: "5PX",margin:'auto' }}
+                    style={{ width: "600px", marginTop: "5PX", margin: "auto" }}
                   >
                     <h3>Skills</h3>
                     <br></br>
@@ -246,7 +246,7 @@ export class Profile extends Component {
                     <h4 className="text-center">Feedbacks & Ratings</h4>
                     <br></br>
                     <div>
-                      <Feedback />
+                      <Feedback id={localStorage.getItem("auth-id")} />
                     </div>
                   </div>
                 </div>
