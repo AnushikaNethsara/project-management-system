@@ -80,4 +80,8 @@ const App = () => {
   );
 };
 
+//paypal sanbox payer -> email: sb-o4q3o6302059@personal.example.com , pass: 1VD"Y!tL
+
+//paypal sandbox reciever -> email: sb-2b1kh6293544@business.example.com , pass: 7d'j/H6-
+
 export default App;

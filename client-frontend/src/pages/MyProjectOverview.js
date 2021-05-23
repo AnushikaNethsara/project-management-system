@@ -107,7 +107,11 @@ class MyProjectOverview extends Component {
                   </h5>
                 </div>
               </div>
-
+              {localStorage.setItem(
+                "projectDescription",
+                this.state.description
+              )}
+              {localStorage.setItem("projectPrice", this.state.price)}
               <div class="container-sm mt-5">
                 <div className="row">
                   <h5 className="text">Requests</h5>
@@ -132,7 +136,7 @@ class MyProjectOverview extends Component {
                             <td>{item.email}</td>
                             <td>
                               <Link
-                                to={"/profile-view/" + item._id+"/worker"}
+                                to={"/profile-view/" + item._id + "/worker"}
                                 className="text-primary"
                                 style={{ textDecoration: "underline" }}
                               >

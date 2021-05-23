@@ -4,6 +4,7 @@ import bg2 from "../img/bg2.jpg";
 import { Box, Grid, Paper, Typography, Button } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
 import Feedback from "../components/Feedback/Feedback";
+import Paypal from "../components/Paypal/Paypal";
 
 import {
   Nav,
@@ -37,6 +38,7 @@ export class ProfileView extends Component {
       values: [],
       show: false,
       type: "",
+      checkout: false,
     };
     this.getAccountDeatils = this.getAccountDeatils.bind(this);
     this.handleModal = this.handleModal.bind(this);
@@ -120,7 +122,20 @@ export class ProfileView extends Component {
                   {this.state.type === "worker" ? (
                     <div>
                       <Box display="flex" justifyContent="center">
-                        <Button variant="contained">Pay Now</Button>
+                        {this.state.checkout ? (
+                          <Paypal />
+                        ) : (
+                          <Button
+                            onClick={() => {
+                              this.setState({
+                                checkout: true,
+                              });
+                            }}
+                            variant="contained"
+                          >
+                            Pay Now!
+                          </Button>
+                        )}
                       </Box>
                       <AddFeedback worker_id={this.props.match.params.id} />
                     </div>
