@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button, Box } from "@material-ui/core";
-import Paypal from "../components/Paypal/Paypal";
 
 function Payment() {
   const [checkout, setCheckout] = useState(false);
@@ -40,18 +39,7 @@ function Payment() {
             <div></div>
             <div style={{ width: "100%" }}>
               <Box display="flex" flexDirection="row-reverse" p={1} m={1}>
-                {checkout ? (
-                  <Paypal />
-                ) : (
-                  <Button
-                    onClick={() => {
-                      setCheckout(true);
-                    }}
-                    variant="contained"
-                  >
-                    Proceed to Pay
-                  </Button>
-                )}
+                <Button variant="contained">Proceed to Pay</Button>
               </Box>
             </div>
             <br></br>
