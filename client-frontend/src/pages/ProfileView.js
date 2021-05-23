@@ -4,6 +4,7 @@ import bg2 from "../img/bg2.jpg";
 import { Box, Grid, Paper, Typography, Button } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
 import Feedback from "../components/Feedback/Feedback";
+
 import {
   Nav,
   form,
@@ -22,6 +23,7 @@ import PropTypes from "prop-types";
 import constants from "../constants/constants";
 import Axios from "axios";
 import { Link } from "react-router-dom";
+import AddFeedback from "../components/Feedback/AddFeedback";
 
 export class ProfileView extends Component {
   static propTypes = {
@@ -37,6 +39,7 @@ export class ProfileView extends Component {
       type: "",
     };
     this.getAccountDeatils = this.getAccountDeatils.bind(this);
+    this.handleModal = this.handleModal.bind(this);
   }
 
   componentDidMount() {
@@ -62,6 +65,10 @@ export class ProfileView extends Component {
       });
   }
 
+  handleModal() {
+    this.setState({ show: !this.state.show });
+  }
+
   render() {
     return (
       <div
@@ -70,7 +77,7 @@ export class ProfileView extends Component {
       >
         <img
           src={bg2}
-          style={{ width: "97.2%", height: "20%", position: "absolute" }}
+          style={{ width: "97%", height: "300px", position: "absolute" }}
         ></img>
         {this.state.values.length > 0 &&
           this.state.values.map((item) => {
@@ -111,9 +118,12 @@ export class ProfileView extends Component {
                 <div className="text-center my-3">
                   {/* <Link to="edit-profile"> */}
                   {this.state.type === "worker" ? (
-                    <Box display="flex" justifyContent="center">
-                      <Button variant="contained">Pay Now</Button>
-                    </Box>
+                    <div>
+                      <Box display="flex" justifyContent="center">
+                        <Button variant="contained">Pay Now</Button>
+                      </Box>
+                      <AddFeedback worker_id={this.props.match.params.id} />
+                    </div>
                   ) : (
                     <></>
                   )}
@@ -159,8 +169,10 @@ export class ProfileView extends Component {
                     <br></br>
                     <div className="row">
                       {item.skills &&
-                        item.skills.map((item) => {
-                          return <Chip skill={item} key={item._id} />;
+                        item.skills.map((item, index) => {
+                          return (
+                            <Chip key={index} skill={item} key={item._id} />
+                          );
                         })}
                     </div>
                   </div>
@@ -175,7 +187,7 @@ export class ProfileView extends Component {
                     <h4 className="text-center">Feedbacks & Ratings</h4>
                     <br></br>
                     <div>
-                      <Feedback />
+                      <Feedback id={this.props.match.params.id} />
                     </div>
                   </div>
                 </div>

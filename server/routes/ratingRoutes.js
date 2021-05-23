@@ -4,12 +4,13 @@ const Rating = require("../models/rating.model");
 //*** add rating ****//
 router.post("/add", async (req, res) => {
   try {
-    let { seller_id,buyer_id,project_id,review,rating } = req.body;
+    let { owner_id, worker_id, review, rating,date } = req.body;
     const newRating = new Rating({
-      seller_id,
-      buyer_id,
+      owner_id,
+      worker_id,
       review,
       rating,
+      date,
     });
 
     const savedRating = await newRating.save();
@@ -20,11 +21,11 @@ router.post("/add", async (req, res) => {
 });
 
 //***get seller reviews****//
-
-router.get("/sellerReview/:id", async (req, res) => {
+router.get("/review/:id", async (req, res) => {
   const id = req.params.id;
-  await Rating.find({ seller_id: id })
-    .populate("seller_id").populate("buyer_id")
+  await Rating.find({ worker_id: id })
+    .populate("owner_id")
+    .populate("worker_id")
     .exec()
     .then((comment) => {
       if (comment) {
@@ -38,23 +39,23 @@ router.get("/sellerReview/:id", async (req, res) => {
     });
 });
 
-//***get buyer reviews****//
-
+//***get buyer reviews****/
 router.get("/buyerReview/:id", async (req, res) => {
   const id = req.params.id;
   await Rating.find({ buyer_id: id })
-      .populate("seller_id").populate("buyer_id")
-      .exec()
-      .then((comment) => {
-        if (comment) {
-          res.status(200).json(comment);
-        } else {
-          res.status(404).json({ message: "not found" });
-        }
-      })
-      .catch((err) => {
-        res.status(500).json(err);
-      });
+    .populate("owner_id")
+    .populate("worker_id")
+    .exec()
+    .then((comment) => {
+      if (comment) {
+        res.status(200).json(comment);
+      } else {
+        res.status(404).json({ message: "not found" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
 });
 
 

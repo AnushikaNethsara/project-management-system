@@ -134,7 +134,7 @@ class ProjectOverview extends Component {
               <div class="container-sm">
                 <div className="row">
                   <Link
-                    to={"/profile-view/" + this.state.owner_id._id+"/viewer"}
+                    to={"/profile-view/" + this.state.owner_id._id + "/viewer"}
                     className="text-primary"
                     style={{ textDecoration: "underline" }}
                   >
@@ -143,7 +143,7 @@ class ProjectOverview extends Component {
                 </div>
               </div>
               <div style={{ width: "100%" }}>
-                {this.state.owner_id != localStorage.getItem("auth-id") &&
+                {this.state.owner_id._id != localStorage.getItem("auth-id") &&
                 this.state.request === false ? (
                   <Box
                     onClick={this.requestProject}
