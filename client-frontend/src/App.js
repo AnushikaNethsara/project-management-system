@@ -10,7 +10,6 @@ import NewProject from "../src/pages/NewProject";
 import MyProjects from "../src/pages/MyProjects";
 import Home from "../src/pages/Home";
 import EditProject from "../src/pages/EditProject";
-import ChatPage from "../src/pages/ChatPage";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Navbar from "../src/components/Nav/Navbar";
 import UserContext from "./context/userContext";
@@ -21,6 +20,8 @@ import EditProfile from "./pages/EditProfile";
 import Example from "./pages/Example";
 import MyProjectOverview from "./pages/MyProjectOverview";
 import ProfileView from "./pages/ProfileView";
+import AppliedProjects from "./pages/AppliedProjects"
+import Chat from "./pages/Chat-Page/Chat/Chat";
 
 const App = () => {
   const [userData, setUserData] = useState({
@@ -69,11 +70,12 @@ const App = () => {
         <Route path="/new-project" component={NewProject} />
         <Route path="/my-projects" component={MyProjects} />
         <Route path="/edit-project/:id" component={EditProject} />
-        <Route path="/chat-page" component={ChatPage} />
+        <Route path="/chat" component={Chat} />
         <Route path="/my-profile" component={Profile} />
         <Route path="/example" component={Example} />
         <Route path="/edit-profile" component={EditProfile} />
-        <Route path="/my-project-overview/:id" component={MyProjectOverview} />
+        <Route path="/edit-profile" component={EditProfile} />
+        <Route path="/applied-projects" component={AppliedProjects} />
         <Route path="/profile-view/:id/:type" component={ProfileView} />
       </UserContext.Provider>
     </Router>

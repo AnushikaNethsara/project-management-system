@@ -208,14 +208,21 @@ export class Profile extends Component {
                   <div>,</div>
                 </div>
                 <div className="text-center my-3">
-                  <Link to="my-projects">
+                  <Link to="/my-projects">
                     <Box display="flex" justifyContent="center">
                       <Button variant="contained">My Projects</Button>
                     </Box>
                   </Link>
                 </div>
                 <div className="text-center my-3">
-                  <Link to="new-project">
+                  <Link to="/applied-projects">
+                    <Box display="flex" justifyContent="center">
+                      <Button variant="contained">Applied Projects</Button>
+                    </Box>
+                  </Link>
+                </div>
+                <div className="text-center my-3">
+                  <Link to="/new-project">
                     <Box display="flex" justifyContent="center">
                       <Button variant="contained">Create New Projects</Button>
                     </Box>

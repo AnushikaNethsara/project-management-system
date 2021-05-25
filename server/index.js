@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const socketio = require("socket.io");
+
 require("dotenv").config();
 
 // set up express
@@ -10,8 +12,6 @@ app.use(express.json());
 app.use(cors());
 
 const PORT = process.env.PORT || 5001;
-
-app.listen(PORT, () => console.log(`The server has started on port: ${PORT}`));
 
 // set up mongoose
 
@@ -31,3 +31,5 @@ app.use("/skill", require("./routes/skillRoutes"));
 app.use("/rating", require("./routes/ratingRoutes"));
 app.use("/projectSkills", require("./routes/projectSkillRoute"));
 app.use("/userSkills", require("./routes/UserSkillRoutes"));
+
+app.listen(PORT, () => console.log(`The server has started on port: ${PORT}`));

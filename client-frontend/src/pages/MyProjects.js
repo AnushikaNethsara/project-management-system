@@ -7,65 +7,15 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import mern from "../img/mern.jpg";
 import constants from "../constants/constants";
-
-//creating Project functional component(not a class component)
-const Project = (props) => (
-  <div className="mt-3">
-    <Card>
-      <Card.Header as="h5">{props.project.title}</Card.Header>
-      <Card.Body>
-        <Row>
-          <Col sm={4}>
-            <Link to={"/my-project-overview/" + props.project._id}>
-              <div style={{ height: "70%", width: "80%" }}>
-                <Image
-                  src={
-                    constants.backend_url +
-                    `/project/photo/${props.project._id}`
-                  }
-                  thumbnail
-                />
-              </div>
-            </Link>
-          </Col>
-          <Col sm={8}>
-            <Card.Text>{props.project.description}</Card.Text>
-            <Card.Text>{props.project.skills}</Card.Text>
-            <Card.Text>{props.project.price}</Card.Text>
-          </Col>
-        </Row>
-        <br></br>
-        <Link to={"/my-project-overview/" + props.project._id}>
-          Full Details
-        </Link>
-        &nbsp;
-        <ButtonGroup>
-          <Link
-            className="btn btn-success"
-            to={"/edit-project/" + props.project._id}
-          >
-            <i className="fa fa-edit" />
-          </Link>
-          <Button
-            className="btn btn-danger"
-            onClick={() => {
-              props.deleteProject(props.project._id);
-            }}
-          >
-            <i className="fa fa-trash" />
-          </Button>
-        </ButtonGroup>
-      </Card.Body>
-    </Card>
-  </div>
-);
+import MyProjectCard from "../components/MyProjectCard/MyProjectCard";
 
 class MyProjects extends Component {
   constructor(props) {
     super(props);
 
     this.deleteProject = this.deleteProject.bind(this);
-    this.state = { projects: [] };
+    this.state = { projects: [], name: "" };
+    this.getUserName = this.getUserName.bind(this);
   }
 
   //get the list of projects from database
@@ -80,6 +30,22 @@ class MyProjects extends Component {
       .then((res) => this.setState({ projects: res.data }))
       .catch((err) => {
         console.log(err);
+      });
+    this.getUserName();
+  }
+
+  getUserName() {
+    var userId = localStorage.getItem("auth-id");
+
+    axios
+      .get(constants.backend_url + "/users/get-user/" + userId)
+      .then((response) => {
+        this.setState({
+          name: response.data[0].name,
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
       });
   }
 
@@ -98,7 +64,8 @@ class MyProjects extends Component {
   projectList() {
     return this.state.projects.map((currentproject) => {
       return (
-        <Project
+        <MyProjectCard
+          name={this.state.name}
           project={currentproject}
           deleteProject={this.deleteProject}
           key={currentproject._id}
