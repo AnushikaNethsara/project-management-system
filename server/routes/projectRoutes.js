@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Project = require("../models/project.model");
 const ProjectSkill = require("../models/projectSkill.model");
+const User = require("../models/user.model");
 const multer = require("multer");
 
 const upload = multer({
@@ -147,7 +148,8 @@ router.get("/getProjectSkills/:id", async (req, res) => {
   try {
     let id = req.params.id;
 
-    await Project.find({ _id: id }, { skills: 1, _id: 0 })
+    // await Project.find({ _id: id }, { skills: 1, _id: 0 })
+    await Project.find({ _id: id })
       .exec()
       .then((project) => {
         res.json(project);
@@ -162,10 +164,11 @@ router.get("/getProjectSkills/:id", async (req, res) => {
 router.get("/onSearch/:skill", async (req, res) => {
   try {
     let skill = req.params.skill;
-
+    console.log(skill)
     await Project.find({ skills: skill })
       .exec()
       .then((project) => {
+
         res.json(project);
       })
       .catch((err) => res.status(400).json("Error : " + err));
@@ -238,8 +241,39 @@ router.get("/get-applied-projects/:id", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+//*** get project details by skill ***//
+router.get("/get-my-projects/:id", async (req, res) => {
+  try {
+    let ownerId = req.params.id;
+    //with one populate this didn't work
+    await Project.find({ owner_id: ownerId })
+        .populate("worker_id")
+        .populate("owner_id")
+        .exec()
+        .then((detail) => {
+          res.json(detail);
+        })
+        .catch((err) => res.status(400).json("Error : " + err));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
-
+//*** get project details by skill ***//
+router.get("/getProjects/:id", async (req, res) => {
+  try {
+    let id = req.params.id;
+    //with one populate this didn't work
+    await User.find({ _id: id }, { skills: 1, _id: 0 })
+        .exec()
+        .then((detail) => {
+          res.json(detail);
+        })
+        .catch((err) => res.status(400).json("Error : " + err));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 
 

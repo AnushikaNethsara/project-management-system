@@ -6,12 +6,14 @@ import mern from "../img/mern.jpg";
 import MyPagination from "../components/Pagination/Pagination";
 import constants from "../constants/constants";
 import Axios from "axios";
+import Alert from "react-bootstrap/Alert";
+
 //
 class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      keyword: "web",
+      keyword: "",
       projectList:[]
     };
     this.onSearch = this.onSearch.bind(this);
@@ -20,10 +22,10 @@ class Search extends Component {
     this.setState({
       keyword: this.props.match.params.keyword
     });
-    this.onSearch();
+    this.onSearch(this.props.match.params.keyword);
   }
-  onSearch(){
-    Axios.get( constants.backend_url + "/project/onSearch/" + this.state.keyword).then(response => {
+  onSearch(keyword){
+    Axios.get( constants.backend_url + "/project/onSearch/" + keyword).then(response => {
       console.log(response.data)
       this.setState({
         projectList:response.data
@@ -38,22 +40,29 @@ class Search extends Component {
               <Container>
                 <h3 className="text-center">Search Results For "{this.state.keyword}"</h3>
                 <br></br>
-                <Row>
-                  <Col>
-                  <p>Cards</p>
-                    {/* <MyCard
-                        image={mern}
-                        title="Project Title"
-                        text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                        price="50"
-                    /> */}
-                  </Col>
 
-                </Row>
+                  {this.state.projectList.length !=0 ?
+                      <Row>
+                        {this.state.projectList &&
+                        this.state.projectList.map((item) => {
+                          return <MyCard data={item} />;
+                        })}
+                      </Row>
+                      :
+                      <div>
+                        <br/><br/>
+                        <center><Alert variant="success"><h4>No Available Projects!!</h4></Alert></center>
+
+                      </div>
+
+                  }
+
+
+
                 <br></br>
 
                 <br></br>
-                <MyPagination></MyPagination>
+                {/*<MyPagination></MyPagination>*/}
               </Container>
             </div>
         );
