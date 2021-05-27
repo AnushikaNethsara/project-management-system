@@ -223,7 +223,7 @@ router.post("/check-request", async (req, res) => {
   }
 });
 //*** get project based on id ***//
-router.get("/getUserProjects/:id", async (req, res) => {
+router.get("/get-applied-projects/:id", async (req, res) => {
   try {
     let id = req.params.id;
 

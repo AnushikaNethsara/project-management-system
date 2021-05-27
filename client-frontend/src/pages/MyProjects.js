@@ -69,6 +69,7 @@ class MyProjects extends Component {
           project={currentproject}
           deleteProject={this.deleteProject}
           key={currentproject._id}
+          type={"my-projects"}
         />
       );
     });
