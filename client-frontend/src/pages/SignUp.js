@@ -55,7 +55,7 @@ class SignUp extends Component {
       this.state.password === "" ||
       this.state.conPassword === "" ||
       this.state.skills === "" ||
-      this.state.skills === ""
+      this.state.skills.length === 0
     ) {
       return this.setState({
         backendError: "Not all fields have been entered.",
@@ -67,10 +67,12 @@ class SignUp extends Component {
     formData.append("email", this.state.email);
     formData.append("password", this.state.password);
     formData.append("passwordCheck", this.state.conPassword);
-    formData.append("skills", this.state.skills);
+    this.state.skills.forEach((element) => {
+      formData.append("skills[]", element);
+    });
     formData.append("description", this.state.description);
     formData.append("photo", this.state.profilePic);
-    console.log("da: " + formData);
+    //console.log("da: " + this.state.skills);
     try {
       const signUpRes = Axios.post(
         constants.backend_url + "/users/register",

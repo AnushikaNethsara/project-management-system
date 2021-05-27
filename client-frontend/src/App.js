@@ -74,7 +74,6 @@ const App = () => {
         <Route path="/my-profile" component={Profile} />
         <Route path="/example" component={Example} />
         <Route path="/edit-profile" component={EditProfile} />
-        <Route path="/edit-profile" component={EditProfile} />
         <Route path="/applied-projects" component={AppliedProjects} />
         <Route path="/profile-view/:id/:type" component={ProfileView} />
       </UserContext.Provider>

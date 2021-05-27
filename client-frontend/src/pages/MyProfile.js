@@ -34,6 +34,8 @@ export class Profile extends Component {
     this.state = {
       values: [],
       show: false,
+      rate: 0,
+      count: 0,
     };
     this.getAccountDeatils = this.getAccountDeatils.bind(this);
     this.handleModal = this.handleModal.bind(this);
@@ -44,7 +46,31 @@ export class Profile extends Component {
       this.props.history.push("/");
     } else {
       this.getAccountDeatils();
+      this.getRating();
     }
+  }
+
+  getRating() {
+    var userId = localStorage.getItem("auth-id");
+    var actualRate = 0;
+    var count = 0;
+    var totalRate = 0;
+    Axios.get(constants.backend_url + "/rating/get-overall-rate/" + userId)
+      .then((response) => {
+        totalRate = response.data.total;
+        count = response.data.count;
+        actualRate = (totalRate / count).toFixed(1);
+        //console.log("actual: " + actualRate);
+        if (totalRate != 0 && count != 0) {
+          this.setState({
+            rate: actualRate,
+            count: count,
+          });
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   handleModal() {
@@ -126,6 +152,19 @@ export class Profile extends Component {
                   {item.name}
                 </h1>
                 <h5 className="text-center text-muted">{item.email}</h5>
+                {/* overall rate */}
+                <div className="row text-center" >
+                  <p className="text-muted px-1">({this.state.rate})</p>
+                  <Rating
+                    precision={0.1}
+                    sizeSmall
+                    name="half-rating-read"
+                    value={this.state.rate}
+                    readOnly
+                  />
+                  <p className="text-muted px-1">({this.state.count})</p>
+                </div>
+                {/* overall rate end */}
                 <div className="text-center my-3">
                   <Link to="edit-profile">
                     <Box display="flex" justifyContent="center">

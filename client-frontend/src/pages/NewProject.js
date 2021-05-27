@@ -65,11 +65,13 @@ class NewProject extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-
+    console.log("po: " + this.state.skills[0]);
     const formData = new FormData();
     formData.append("title", this.state.title);
     formData.append("description", this.state.description);
-    formData.append("skills", this.state.skills);
+    this.state.skills.forEach(element => {
+      formData.append("skills[]", element);
+    });
     formData.append("price", this.state.price);
     formData.append("owner_id", localStorage.getItem("auth-id"));
     formData.append("photo", this.state.photo);

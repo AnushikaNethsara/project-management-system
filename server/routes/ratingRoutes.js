@@ -58,5 +58,28 @@ router.get("/buyerReview/:id", async (req, res) => {
     });
 });
 
+//** get overall rating**//
+router.get("/get-overall-rate/:id", async (req, res) => {
+  try {
+    let fullSum = 0;
+    let count = 0;
+    Rating.find({ worker_id: req.params.id })
+      .exec()
+      .then((item) => {
+        item.forEach(function (items, index, arr) {
+          //let itemSum = items.cartPrice * items.quantity;
+          count = count + 1;
+          fullSum = fullSum + items.rating;
+        });
+        res.status(200).json({ total: fullSum, count: count });
+      })
+      .catch((err) => {
+        console.log("fail");
+      });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 module.exports = router;

@@ -102,7 +102,7 @@ class Feedback extends Component {
                               borderColor="transparent"
                             >
                               <Typography component="legend">Rating</Typography>
-                              <Rating name="view-rate" value={item.rating} />
+                              <Rating name="view-rate" value={item.rating} readOnly/>
                             </Box>
                           </div>
                         </div>

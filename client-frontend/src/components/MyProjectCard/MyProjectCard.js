@@ -61,7 +61,7 @@ class MyProjectCard extends Component {
                     className="btn btn-success"
                     to={`/chat?name=${this.props.name}&room=${this.props.project.title}`}
                   >
-                    <i className="fa fa-file" />
+                    <i className="fa fa-commenting" />
                   </Link>
                 </ButtonGroup>
               </Card.Body>
@@ -97,7 +97,7 @@ class MyProjectCard extends Component {
                     className="btn btn-success"
                     to={`/chat?name=${this.props.name}&room=${this.props.project.title}`}
                   >
-                    <i className="fa fa-file" />
+                    <i className="fa fa-commenting" />
                   </Link>
                 </ButtonGroup>
               </Card.Body>

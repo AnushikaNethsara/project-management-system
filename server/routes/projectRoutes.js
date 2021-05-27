@@ -21,13 +21,14 @@ router.post(
   upload.single("photo"),
   async (req, res) => {
     try {
-      console.log(req.body);
+      console.log(req.body.skills);
+      console.log(Array.isArray(req.body.skills));
       const project = new Project(req.body);
       const file = req.file.buffer;
       project.photo = file;
 
       await project.save();
-      res.status(201).send({ msg: "add project" });
+      res.status(200).send({ msg: "add project" });
     } catch (error) {
       res.status(500).send({
         upload_error: error.message,
