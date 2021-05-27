@@ -6,6 +6,8 @@ import { Link, useHistory } from "react-router-dom";
 import Axios from "axios";
 import UserContext from "../../src/context/userContext";
 import constants from "../constants/constants";
+import "../css/login.css";
+
 const Login = () => {
   const [values, setValues] = useState({
     email: "",
@@ -45,9 +47,7 @@ const Login = () => {
     <div className="container">
       <div className="card" style={{ marginTop: "8%" }}>
         <div className="row">
-          <div className="col" style={{ height: "100%" }}>
-            <img src={loginBack} alt="img back" class="img-fluid"></img>
-          </div>
+          <div className="col" class="imageContainer"></div>
           <div className="col">
             <div style={{ paddingTop: "10vh", width: "90%" }}>
               <h3 className="text-center" style={{ paddingBottom: "40px" }}>

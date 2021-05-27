@@ -3,6 +3,7 @@ import { Card, Row, Col, Image, ButtonGroup, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import constants from "../../constants/constants";
+import "./style.css";
 
 class MyProjectCard extends Component {
   constructor() {
@@ -22,6 +23,7 @@ class MyProjectCard extends Component {
                     <Link to={"/my-project-overview/" + this.props.project._id}>
                       <div style={{ height: "70%", width: "80%" }}>
                         <Image
+                          className="productImageContainer"
                           src={
                             constants.backend_url +
                             `/project/photo/${this.props.project._id}`
@@ -32,13 +34,30 @@ class MyProjectCard extends Component {
                     </Link>
                   </Col>
                   <Col sm={8}>
-                    <Card.Text>{this.props.project.description}</Card.Text>
-                    <Card.Text>{this.props.project.skills}</Card.Text>
-                    <Card.Text>{this.props.project.price}</Card.Text>
+                    {/* <Card.Text>
+                      <h5>Description</h5>
+                      {this.props.project.description}
+                    </Card.Text> */}
+                    <Card.Text>
+                      <h5>Skills</h5>
+                      {this.props.project.skills.map((item) => (
+                        <p style={{ color: "green" }}>{item}</p>
+                      ))}
+                    </Card.Text>
+
+                    <Card.Text>
+                      <h5>Price</h5>
+                      <h5 style={{ color: "red" }}>
+                        $ {this.props.project.price}
+                      </h5>
+                    </Card.Text>
                   </Col>
                 </Row>
                 <br></br>
-                <Link to={"/my-project-overview/" + this.props.project._id}>
+                <Link
+                  className="btn btn-primary"
+                  to={"/my-project-overview/" + this.props.project._id}
+                >
                   Full Details
                 </Link>
                 &nbsp;
@@ -85,14 +104,31 @@ class MyProjectCard extends Component {
                     </div>
                   </Col>
                   <Col sm={8}>
-                    <Card.Text>{this.props.project.description}</Card.Text>
-                    <Card.Text>{this.props.project.skills}</Card.Text>
-                    <Card.Text>{this.props.project.price}</Card.Text>
+                    {/* <Card.Text>{this.props.project.description}</Card.Text> */}
+                    <Card.Text>
+                      <h5>Skills</h5>
+                      {this.props.project.skills.map((item) => (
+                        <p style={{ color: "green" }}>{item}</p>
+                      ))}
+                    </Card.Text>
+
+                    <Card.Text>
+                      <h5>Price</h5>
+                      <h5 style={{ color: "red" }}>
+                        $ {this.props.project.price}
+                      </h5>
+                    </Card.Text>
                   </Col>
                 </Row>
                 <br></br>
                 &nbsp;
                 <ButtonGroup>
+                  <Link
+                    className="btn btn-primary"
+                    to={"/project-overview/" + this.props.project._id}
+                  >
+                    Full Details
+                  </Link>
                   <Link
                     className="btn btn-success"
                     to={`/chat?name=${this.props.name}&room=${this.props.project.title}`}

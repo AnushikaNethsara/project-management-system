@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Axios from "axios";
 import constants from "../constants/constants";
 import PropTypes from "prop-types";
+import "../css/login.css";
 
 import SkillSet from "../constants/skills";
 import Chip from "@material-ui/core/Chip";
@@ -85,7 +86,7 @@ class SignUp extends Component {
       ).then((res) => {
         if (res.data.msg === "Successfully Registered") {
           this.props.history.push("/login");
-        }else{
+        } else {
           this.setState({
             backendError: "Something went wrong",
           });
@@ -102,9 +103,7 @@ class SignUp extends Component {
       <div className="container" style={{ marginBottom: "20%" }}>
         <div className="card" style={{ marginTop: "8%" }}>
           <div className="row">
-            <div className="col" style={{ height: "100%" }}>
-              <img src={loginBack} alt="img back" class="img-fluid"></img>
-            </div>
+            <div className="col" class="imageContainer"></div>
             <div className="col">
               <div
                 style={{

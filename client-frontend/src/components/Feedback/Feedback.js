@@ -45,48 +45,40 @@ class Feedback extends Component {
         {this.state.values &&
           this.state.values.map((item, index) => {
             return (
-              <div className="row" key={index}>
+              <div style={{ width: "100%" }} className="row" key={index}>
                 <Container>
-                  <Row>
-                    <Col sm={16}>
+                  <Row className="justify-content-md-center">
+                    <Col sm={12}>
                       <div
-                        class="container-lg  shadow p-3 mb-5  text-dark   "
+                        class="shadow p-3 mb-5  text-dark"
                         style={{
-                          // marginTop: "2%",
                           backgroundColor: "white",
-                          // marginLeft: "25%",
+                          width: "75vw",
                         }}
                       >
                         <br></br>
-                        <div>
-                          <Container>
-                            <Row>
-                              <Col xs={6}>
-                                <Container>
-                                  <Row>
-                                    <span>
-                                      <label>
-                                        <b>{item.owner_id.name} </b>
-                                      </label>
-                                    </span>
-                                  </Row>
-                                </Container>
-                              </Col>
-
-                              <Col xs={6}>
-                                <span class="align-middle">
-                                  <div style={{ marginLeft: "70%" }}>
-                                    {item.date.split("T")[0]}
-                                  </div>
+                        <div class="container-lg text-dark">
+                          <Row>
+                            <Col xs={10}>
+                              <Row>
+                                <span>
+                                  <label>
+                                    <b>{item.owner_id.name} </b>
+                                  </label>
                                 </span>
-                              </Col>
-                            </Row>
-                          </Container>
+                              </Row>
+                            </Col>
+                            <Col xs={2}>
+                              <span class="align-middle">
+                                <div>{item.date.split("T")[0]}</div>
+                              </span>
+                            </Col>
+                          </Row>
                         </div>
 
                         <br></br>
                         <div
-                          class="container-lg    text-dark  "
+                          class="text-dark"
                           style={{
                             marginTop: "2%",
                             backgroundColor: "white",
@@ -102,7 +94,11 @@ class Feedback extends Component {
                               borderColor="transparent"
                             >
                               <Typography component="legend">Rating</Typography>
-                              <Rating name="view-rate" value={item.rating} readOnly/>
+                              <Rating
+                                name="view-rate"
+                                value={item.rating}
+                                readOnly
+                              />
                             </Box>
                           </div>
                         </div>

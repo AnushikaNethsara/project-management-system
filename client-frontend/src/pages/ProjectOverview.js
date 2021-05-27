@@ -105,7 +105,7 @@ class ProjectOverview extends Component {
             <br />
             <div class="container-sm   text-dark mt-3">
               <h4>Project Title</h4>
-              <p className="text-muted">{this.state.title}</p>
+              <p>{this.state.title}</p>
 
               <h4>Job Description</h4>
               <p>{this.state.description}</p>
@@ -122,11 +122,11 @@ class ProjectOverview extends Component {
               </div>
 
               <h4>Job Rate</h4>
-              <h1>${this.state.price}</h1>
+              <h1 style={{ color: "red" }}>$ {this.state.price}</h1>
               <div class="container-sm">
                 <div className="row">
                   <h5 className="text-muted">No of requests recived: </h5>
-                  <h5 className="ml-2">
+                  <h5 style={{ color: "green" }} className="ml-2">
                     {this.state.workers_ids.length} {"  "}
                   </h5>
                 </div>

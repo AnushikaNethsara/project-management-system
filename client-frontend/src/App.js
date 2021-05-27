@@ -7,6 +7,7 @@ import ProjectOverView from "../src/pages/ProjectOverview";
 import PostProject from "../src/pages/PostProject";
 import PaymentPage from "../src/pages/PaymentPage";
 import NewProject from "../src/pages/NewProject";
+import Explore from "../src/pages/Explore";
 import MyProjects from "../src/pages/MyProjects";
 import Home from "../src/pages/Home";
 import EditProject from "../src/pages/EditProject";
@@ -20,7 +21,7 @@ import EditProfile from "./pages/EditProfile";
 import Example from "./pages/Example";
 import MyProjectOverview from "./pages/MyProjectOverview";
 import ProfileView from "./pages/ProfileView";
-import AppliedProjects from "./pages/AppliedProjects"
+import AppliedProjects from "./pages/AppliedProjects";
 import Chat from "./pages/Chat-Page/Chat/Chat";
 
 const App = () => {
@@ -63,8 +64,10 @@ const App = () => {
         <Route path="/" exact component={Home} />
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={Login} />
+        <Route path="/explore" component={Explore} />
         <Route path="/search/:keyword" component={Search} />
         <Route path="/project-overview/:id" component={ProjectOverView} />
+        <Route path="/my-project-overview/:id" component={MyProjectOverview} />
         <Route path="/post-project" component={PostProject} />
         <Route path="/payment-page" component={PaymentPage} />
         <Route path="/new-project" component={NewProject} />
