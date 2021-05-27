@@ -1,10 +1,18 @@
-import React from "react";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import React, { useState } from "react";
+import {
+  Navbar,
+  Nav,
+  Container,
+  Form,
+  FormControl,
+  Button,
+} from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../img/logo.png";
 import "./navbar.css";
 
 const BeforeSignUp = () => {
+  const [searchKeyword, setSearchKeyword] = useState("");
   return (
     <div>
       <Navbar
@@ -30,16 +38,18 @@ const BeforeSignUp = () => {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto"></Nav>
             <Nav>
-              {/* <Form inline>
+              <Form inline>
                 <FormControl
                   type="text"
                   placeholder="Search"
                   className="mr-sm-2"
+                  onChange={(e) => {
+                    setSearchKeyword(e.target.value);
+                  }}
                 />
-                <Button variant="outline-light">Search</Button>
-              </Form> */}
+              </Form>
               <li className="nav-item">
-                <NavLink to="/search" className="nav-link">
+                <NavLink to={"/search/" + searchKeyword} className="nav-link">
                   <i className="fa fa-search" />
                   &nbsp; Search
                 </NavLink>
