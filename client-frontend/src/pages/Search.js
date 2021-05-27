@@ -6,7 +6,7 @@ import mern from "../img/mern.jpg";
 import MyPagination from "../components/Pagination/Pagination";
 import constants from "../constants/constants";
 import Axios from "axios";
-
+//
 class Search extends Component {
   constructor(props) {
     super(props);
@@ -40,12 +40,13 @@ class Search extends Component {
                 <br></br>
                 <Row>
                   <Col>
-                    <MyCard
+                  <p>Cards</p>
+                    {/* <MyCard
                         image={mern}
                         title="Project Title"
                         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                         price="50"
-                    />
+                    /> */}
                   </Col>
 
                 </Row>
