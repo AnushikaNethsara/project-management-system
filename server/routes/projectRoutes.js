@@ -222,6 +222,22 @@ router.post("/check-request", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+//*** get project based on id ***//
+router.get("/getUserProjects/:id", async (req, res) => {
+  try {
+    let id = req.params.id;
+
+    await Project.find({ workers_ids: id })
+        .exec()
+        .then((project) => {
+          console.log(project)
+          res.status(200).json(project);
+        })
+        .catch((err) => res.status(400).json("Error : " + err));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 
 
