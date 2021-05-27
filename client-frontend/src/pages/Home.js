@@ -35,17 +35,15 @@ class Home extends Component {
       .then((response) => {
 
         response.data.forEach(project=>{
-          console.log(project)
+        console.log(this.state.skills)
           if(project.skills.some((val) => this.state.skills.indexOf(val) > 0) ===true){
-            // this.setState({
-            //   values: project,
-            // });
-            this.state.values.push(project)
+            console.log(true)
+            this.setState({values: this.state.values.concat(project)});
           }
           if(project.skills.some((val) => this.state.skills.indexOf(val) > 0) ===false){
-            // this.setState({
-            //   allProjects: project,
-            // });
+
+            console.log(false)
+
             this.setState({allProjects: this.state.allProjects.concat(project)});
           }
         }
@@ -61,9 +59,7 @@ class Home extends Component {
         .then((response) => {
           console.log(response.data)
           response.data.forEach(skill=>{
-            this.setState({
-              skills: skill.skills,
-            });
+            this.setState({skills: this.state.skills.concat(skill.skills)});
           })
         })
         .catch(function (error) {
