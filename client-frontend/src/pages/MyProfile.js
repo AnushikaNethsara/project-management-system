@@ -153,22 +153,32 @@ export class Profile extends Component {
                 </h1>
                 <h5 className="text-center text-muted">{item.email}</h5>
                 {/* overall rate */}
-                <div className="row text-center" >
-                  <p className="text-muted px-1">({this.state.rate})</p>
-                  <Rating
-                    precision={0.1}
-                    sizeSmall
-                    name="half-rating-read"
-                    value={this.state.rate}
-                    readOnly
-                  />
-                  <p className="text-muted px-1">({this.state.count})</p>
+                <div className="text-center">
+                  <Row className="justify-content-md-center">
+                    <Col sm={1}>
+                      <p className="text-muted px-1">({this.state.rate})</p>
+                    </Col>
+                    <Col sm={2}>
+                      <Rating
+                        precision={0.1}
+                        sizeSmall
+                        name="half-rating-read"
+                        value={this.state.rate}
+                        readOnly
+                      />
+                    </Col>
+                    <Col sm={1}>
+                      <p className="text-muted px-1">({this.state.count})</p>
+                    </Col>
+                  </Row>
                 </div>
                 {/* overall rate end */}
                 <div className="text-center my-3">
                   <Link to="edit-profile">
                     <Box display="flex" justifyContent="center">
-                      <Button variant="contained">Edit Profile</Button>
+                      <Button color="primary" variant="contained">
+                        Edit Profile
+                      </Button>
                     </Box>
                   </Link>
 
@@ -176,6 +186,7 @@ export class Profile extends Component {
                   <div className="text-center my-3">
                     <Box display="flex" justifyContent="center">
                       <Button
+                        color="secondary"
                         variant="contained"
                         onClick={() => {
                           this.handleModal();
@@ -249,21 +260,27 @@ export class Profile extends Component {
                 <div className="text-center my-3">
                   <Link to="/my-projects">
                     <Box display="flex" justifyContent="center">
-                      <Button variant="contained">My Projects</Button>
+                      <Button color="primary" variant="contained">
+                        My Projects
+                      </Button>
                     </Box>
                   </Link>
                 </div>
                 <div className="text-center my-3">
                   <Link to="/applied-projects">
                     <Box display="flex" justifyContent="center">
-                      <Button variant="contained">Applied Projects</Button>
+                      <Button color="primary" variant="contained">
+                        Applied Projects
+                      </Button>
                     </Box>
                   </Link>
                 </div>
                 <div className="text-center my-3">
                   <Link to="/new-project">
                     <Box display="flex" justifyContent="center">
-                      <Button variant="contained">Create New Projects</Button>
+                      <Button color="primary" variant="contained">
+                        Create New Projects
+                      </Button>
                     </Box>
                   </Link>
                 </div>

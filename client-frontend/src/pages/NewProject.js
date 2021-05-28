@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import TagInput from "../components/TagInput/TagInput";
 import axios from "axios";
 import constants from "../constants/constants";
@@ -31,7 +32,7 @@ class NewProject extends Component {
       description: "",
       skills: [],
       price: "0",
-      workers_ids:[null],
+      workers_ids: [null],
       photo: null,
       fixedOptions: [SkillSet[2]],
     };
@@ -69,7 +70,7 @@ class NewProject extends Component {
     const formData = new FormData();
     formData.append("title", this.state.title);
     formData.append("description", this.state.description);
-    this.state.skills.forEach(element => {
+    this.state.skills.forEach((element) => {
       formData.append("skills[]", element);
     });
     formData.append("price", this.state.price);
@@ -192,11 +193,14 @@ class NewProject extends Component {
                     onChange={this.hadleUpload}
                   />
                 </div>
-
                 <br></br>
-                <button type="submit" className="btn btn-primary ">
+                <button type="submit" className="btn btn-primary">
                   Post Project
                 </button>
+                &nbsp;&nbsp;
+                <Link to="/my-profile" className="btn btn-danger">
+                  Cancel
+                </Link>
               </form>
               <br></br>
             </div>

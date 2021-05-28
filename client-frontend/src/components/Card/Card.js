@@ -22,7 +22,7 @@ export default function MyCard({ data }) {
                 <Col>
                   <i className="fa fa-heart" />
                 </Col>
-                <Col>Price: &euro;{data.price}</Col>
+                <Col>Price: $ {data.price}</Col>
               </Row>
             </Card.Footer>
           </Card.Body>
