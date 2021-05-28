@@ -4,11 +4,12 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import constants from "../constants/constants";
 import MyProjectCard from "../components/MyProjectCard/MyProjectCard";
+import BeatLoader from "react-spinners/BeatLoader";
 
 class AppliedProjects extends Component {
   constructor(props) {
     super(props);
-    this.state = { projects: [], name: "" };
+    this.state = { projects: [], name: "", loading: false };
     this.getMyProjects = this.getMyProjects.bind(this);
   }
   componentDidMount() {
@@ -36,7 +37,12 @@ class AppliedProjects extends Component {
           "/project/get-applied-projects/" +
           localStorage.getItem("auth-id")
       )
-      .then((res) => this.setState({ projects: res.data }))
+      .then((res) => {
+        this.setState({ projects: res.data });
+        this.setState({
+          loading: true,
+        });
+      })
       .catch((err) => {
         console.log(err);
       });
@@ -45,21 +51,33 @@ class AppliedProjects extends Component {
     return (
       <div style={{ marginTop: "40px" }}>
         <Container>
-          <h4 className="text-center">Requested Projects</h4>
+          <h4 className="text-center mt-5 text-uppercase">
+            Requested Projects
+          </h4>
 
           <br></br>
-          {this.state.projects &&
-            this.state.projects.map((item) => {
-              return (
-                <MyProjectCard
-                  name={this.state.name}
-                  type={"requested-projects"}
-                  project={item}
-                  //deleteProject={this.deleteProject}
-                  key={item._id}
-                />
-              );
-            })}
+
+          {this.state.loading ? (
+            <div>
+              {this.state.projects &&
+                this.state.projects.map((item) => {
+                  return (
+                    <MyProjectCard
+                      name={this.state.name}
+                      type={"requested-projects"}
+                      project={item}
+                      //deleteProject={this.deleteProject}
+                      key={item._id}
+                    />
+                  );
+                })}
+            </div>
+          ) : (
+            <div className="text-center" style={{ marginTop: "10%" }}>
+              <BeatLoader color={"#0052d4"} loading={true} size={100} />
+            </div>
+          )}
+
           <br></br>
         </Container>
       </div>

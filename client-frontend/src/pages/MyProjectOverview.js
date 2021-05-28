@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import constants from "../constants/constants";
 import { Card, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import BeatLoader from "react-spinners/BeatLoader";
 
 class MyProjectOverview extends Component {
   static propTypes = {
@@ -24,6 +25,7 @@ class MyProjectOverview extends Component {
       price: "0",
       owner_id: "",
       workers_ids: "",
+      loading: false,
     };
     this.requestProject = this.requestProject.bind(this);
   }
@@ -57,6 +59,9 @@ class MyProjectOverview extends Component {
           skills: res.data[0].skills,
           workers_ids: res.data[0].workers_ids,
         });
+        this.setState({
+          loading: true,
+        });
       })
       .catch(function (err) {
         console.log(err);
@@ -68,6 +73,7 @@ class MyProjectOverview extends Component {
     return (
       <div>
         <div>
+          
           <div
             class="container-lg shadow p-3 mb-5 bg-body rounded text-dark "
             style={{ marginTop: "3%", backgroundColor: "white" }}

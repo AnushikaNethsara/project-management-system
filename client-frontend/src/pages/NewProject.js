@@ -126,12 +126,7 @@ class NewProject extends Component {
                     value={this.state.skills}
                     onChange={(event, newValue) => {
                       this.setState({
-                        skills: [
-                          ...newValue.filter(
-                            (option) =>
-                              this.state.fixedOptions.indexOf(option) === -1
-                          ),
-                        ],
+                        skills: [...newValue],
                       });
                     }}
                     options={SkillSet}
@@ -147,7 +142,7 @@ class NewProject extends Component {
                         {...params}
                         label=""
                         variant="outlined"
-                        placeholder="My Skills"
+                        placeholder="Required Skills"
                       />
                     )}
                   />

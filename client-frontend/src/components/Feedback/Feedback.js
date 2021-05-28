@@ -13,12 +13,14 @@ import {
 import Rating from "@material-ui/lab/Rating";
 import Axios from "axios";
 import constants from "../../constants/constants";
+import BounceLoader from "react-spinners/BounceLoader";
 
 class Feedback extends Component {
   constructor() {
     super();
     this.state = {
       values: [],
+      loading: false,
     };
     this.getAccountDeatils = this.getAccountDeatils.bind(this);
   }
@@ -33,6 +35,9 @@ class Feedback extends Component {
         this.setState({
           values: response.data,
         });
+        this.setState({
+          loading: true,
+        });
         var date = new Date(response.data[0]).toISOString().split("T")[0];
       })
       .catch(function (error) {
@@ -42,76 +47,86 @@ class Feedback extends Component {
   render() {
     return (
       <div>
-        {this.state.values &&
-          this.state.values.map((item, index) => {
-            return (
-              <div style={{ width: "100%" }} className="row" key={index}>
-                <Container>
-                  <Row className="justify-content-md-center">
-                    <Col sm={12}>
-                      <div
-                        class="shadow p-3 mb-5  text-dark"
-                        style={{
-                          backgroundColor: "white",
-                          width: "75vw",
-                        }}
-                      >
-                        <br></br>
-                        <div class="container-lg text-dark">
-                          <Row>
-                            <Col xs={10}>
+        {this.state.loading ? (
+          <div>
+            {this.state.values &&
+              this.state.values.map((item, index) => {
+                return (
+                  <div style={{ width: "100%" }} className="row" key={index}>
+                    <Container>
+                      <Row className="justify-content-md-center">
+                        <Col sm={12}>
+                          <div
+                            class="shadow p-3 mb-5  text-dark"
+                            style={{
+                              backgroundColor: "white",
+                              width: "75vw",
+                            }}
+                          >
+                            <br></br>
+                            <div class="container-lg text-dark">
                               <Row>
-                                <span>
-                                  <label>
-                                    <b>{item.owner_id.name} </b>
-                                  </label>
-                                </span>
+                                <Col xs={10}>
+                                  <Row>
+                                    <span>
+                                      <label>
+                                        <b>{item.owner_id.name} </b>
+                                      </label>
+                                    </span>
+                                  </Row>
+                                </Col>
+                                <Col xs={2}>
+                                  <span class="align-middle">
+                                    <div>{item.date.split("T")[0]}</div>
+                                  </span>
+                                </Col>
                               </Row>
-                            </Col>
-                            <Col xs={2}>
-                              <span class="align-middle">
-                                <div>{item.date.split("T")[0]}</div>
-                              </span>
-                            </Col>
-                          </Row>
-                        </div>
+                            </div>
 
-                        <br></br>
-                        <div
-                          class="text-dark"
-                          style={{
-                            marginTop: "2%",
-                            backgroundColor: "white",
-                          }}
-                        >
-                          <b>Feedback : </b>
-                          <p class="text-muted">{item.review}</p>
-                          <br></br>
-                          <div>
-                            <Box
-                              component="fieldset"
-                              mb={3}
-                              borderColor="transparent"
+                            <br></br>
+                            <div
+                              class="text-dark"
+                              style={{
+                                marginTop: "2%",
+                                backgroundColor: "white",
+                              }}
                             >
-                              <Typography component="legend">Rating</Typography>
-                              <Rating
-                                name="view-rate"
-                                value={item.rating}
-                                readOnly
-                              />
-                            </Box>
+                              <b>Feedback : </b>
+                              <p class="text-muted">{item.review}</p>
+                              <br></br>
+                              <div>
+                                <Box
+                                  component="fieldset"
+                                  mb={3}
+                                  borderColor="transparent"
+                                >
+                                  <Typography component="legend">
+                                    Rating
+                                  </Typography>
+                                  <Rating
+                                    name="view-rate"
+                                    value={item.rating}
+                                    readOnly
+                                  />
+                                </Box>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col sm={4}>
-                      <div class="ml-3"></div>
-                    </Col>
-                  </Row>
-                </Container>
-              </div>
-            );
-          })}
+                        </Col>
+                        <Col sm={4}>
+                          <div class="ml-3"></div>
+                        </Col>
+                      </Row>
+                    </Container>
+                  </div>
+                );
+              })}
+          </div>
+        ) : (
+          <div className="text-center" style={{ marginTop: "-1%" }}>
+            <BounceLoader color={"#0052d4"} loading={true} size={50} />
+          </div>
+        )}
       </div>
     );
   }

@@ -74,7 +74,6 @@ const App = () => {
         <Route path="/my-projects" component={MyProjects} />
         <Route path="/edit-project/:id" component={EditProject} />
         <Route path="/chat" component={Chat} />
-        <Route path="/my-project-overview/:id" component={MyProjectOverview} />
         <Route path="/my-profile" component={Profile} />
         <Route path="/example" component={Example} />
         <Route path="/edit-profile" component={EditProfile} />

@@ -6,6 +6,7 @@ import mern from "../img/mern.jpg";
 import PropTypes from "prop-types";
 import constants from "../constants/constants";
 import Axios from "axios";
+import BeatLoader from "react-spinners/BeatLoader";
 
 class Home extends Component {
   static propTypes = {
@@ -19,6 +20,8 @@ class Home extends Component {
       values: [],
       allProjects: [],
       skills: [""],
+      recomendedLoading: false,
+      tryTheseLoading: false,
     };
     this.getAccountDeatils = this.getAccountDeatils.bind(this);
     this.getSkills = this.getSkills.bind(this);
@@ -41,6 +44,9 @@ class Home extends Component {
           ) {
             console.log(true);
             this.setState({ values: this.state.values.concat(project) });
+            this.setState({
+              recomendedLoading: true,
+            });
           }
           if (
             project.skills.some((val) => this.state.skills.indexOf(val) > 0) ===
@@ -50,6 +56,9 @@ class Home extends Component {
 
             this.setState({
               allProjects: this.state.allProjects.concat(project),
+            });
+            this.setState({
+              tryTheseLoading: true,
             });
           }
         });
@@ -80,22 +89,36 @@ class Home extends Component {
         <MyCarousel></MyCarousel>
         <Container>
           <div style={{ marginTop: "3%" }}>
-            <h4>Recommended for you:</h4>
-            <Row>
-              {this.state.values &&
-                this.state.values.map((item) => {
-                  return <MyCard data={item} />;
-                })}
-            </Row>
+            <h2 className="text-uppercase mt-5 mb-4">Recommended for you:</h2>
+
+            {this.state.recomendedLoading ? (
+              <Row>
+                {this.state.values &&
+                  this.state.values.map((item) => {
+                    return <MyCard data={item} />;
+                  })}
+              </Row>
+            ) : (
+              <div className="text-center" style={{ marginTop: "10%" }}>
+                <BeatLoader color={"#0052d4"} loading={true} size={100} />
+              </div>
+            )}
           </div>
-          <div>
-            <h4>You may try:</h4>
-            <Row>
-              {this.state.allProjects &&
-                this.state.allProjects.map((item) => {
-                  return <MyCard data={item} />;
-                })}
-            </Row>
+          <div className="mt-5">
+            <h2 className="text-uppercase mt-5 mb-4">You may try:</h2>
+
+            {this.state.tryTheseLoading ? (
+              <Row>
+                {this.state.allProjects &&
+                  this.state.allProjects.map((item) => {
+                    return <MyCard data={item} />;
+                  })}
+              </Row>
+            ) : (
+              <div className="text-center" style={{ marginTop: "10%" }}>
+                <BeatLoader color={"#0052d4"} loading={true} size={100} />
+              </div>
+            )}
           </div>
         </Container>
       </div>

@@ -8,13 +8,14 @@ import axios from "axios";
 import mern from "../img/mern.jpg";
 import constants from "../constants/constants";
 import MyProjectCard from "../components/MyProjectCard/MyProjectCard";
+import BeatLoader from "react-spinners/BeatLoader";
 
 class MyProjects extends Component {
   constructor(props) {
     super(props);
 
     this.deleteProject = this.deleteProject.bind(this);
-    this.state = { projects: [], name: "" };
+    this.state = { projects: [], name: "", loading: false };
     this.getUserName = this.getUserName.bind(this);
   }
 
@@ -27,7 +28,12 @@ class MyProjects extends Component {
           "/project/get-my-projects/" +
           localStorage.getItem("auth-id")
       )
-      .then((res) => this.setState({ projects: res.data }))
+      .then((res) => {
+        this.setState({ projects: res.data });
+        this.setState({
+          loading: true,
+        });
+      })
       .catch((err) => {
         console.log(err);
       });
@@ -84,7 +90,14 @@ class MyProjects extends Component {
             <i className="fa fa-plus" /> Add New Project
           </Link>
           <br></br>
-          {this.projectList()}
+          {this.state.loading ? (
+            this.projectList()
+          ) : (
+            <div className="text-center" style={{ marginTop: "10%" }}>
+              <BeatLoader color={"#0052d4"} loading={true} size={100} />
+            </div>
+          )}
+          {/* {this.projectList()} */}
           <br></br>
         </Container>
       </div>
