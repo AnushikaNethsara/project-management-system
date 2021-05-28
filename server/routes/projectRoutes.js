@@ -166,7 +166,6 @@ router.get("/onSearch/:skill", async (req, res) => {
     await Project.find({ skills: {'$regex' : skill, '$options' : 'i'}})
       .exec()
       .then((project) => {
-        console.log(project)
         res.json(project);
       })
       .catch((err) => res.status(400).json("Error : " + err));

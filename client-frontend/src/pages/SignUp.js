@@ -49,7 +49,9 @@ class SignUp extends Component {
 
   async onSubmit(e) {
     e.preventDefault();
-
+    this.setState({
+      backendError: "",
+    });
     if (
       this.state.name === "" ||
       this.state.email === "" ||
@@ -60,6 +62,16 @@ class SignUp extends Component {
     ) {
       return this.setState({
         backendError: "Not all fields have been entered.",
+      });
+    }
+    if (this.state.profilePic === null) {
+      return this.setState({
+        backendError: "Please Upload a profile picture",
+      });
+    }
+    if (this.state.password != this.state.conPassword) {
+      return this.setState({
+        backendError: "Please Enter the same password twice",
       });
     }
 
@@ -73,7 +85,6 @@ class SignUp extends Component {
     });
     formData.append("description", this.state.description);
     formData.append("photo", this.state.profilePic);
-    //console.log("da: " + this.state.skills);
     try {
       const signUpRes = Axios.post(
         constants.backend_url + "/users/register",
@@ -94,7 +105,7 @@ class SignUp extends Component {
       });
     } catch (err) {
       err.response.data.msg &&
-        this.setState({ backendError: "Something went wrong" });
+        this.setState({ backendError: err.response.data.msg });
     }
   }
 
@@ -111,114 +122,119 @@ class SignUp extends Component {
                   width: "90%",
                 }}
               >
-                <h3 className="text-center" style={{ paddingBottom: "20px" }}>
-                  Sign Up
-                </h3>
-                <div className="conatiner text-center">
-                  <p className="text-danger">{this.state.backendError}</p>
-                </div>
-                <Input
-                  name="name"
-                  onChange={(e) => this.handleChange(e)}
-                  lable="Name"
-                  type="text"
-                  placeholder="Enter Your Name..."
-                />
-                <Input
-                  name="email"
-                  onChange={(e) => this.handleChange(e)}
-                  lable="Email"
-                  type="text"
-                  placeholder="Enter Your Email..."
-                ></Input>
+                <form onSubmit={this.onSubmit}>
+                  <h3 className="text-center" style={{ paddingBottom: "20px" }}>
+                    Sign Up
+                  </h3>
+                  <div className="conatiner text-center">
+                    <p className="text-danger">{this.state.backendError}</p>
+                  </div>
+                  <Input
+                    name="name"
+                    onChange={(e) => this.handleChange(e)}
+                    lable="Name"
+                    type="text"
+                    placeholder="Enter Your Name..."
+                  />
+                  <Input
+                    name="email"
+                    onChange={(e) => this.handleChange(e)}
+                    lable="Email"
+                    type="text"
+                    placeholder="Enter Your Email..."
+                  ></Input>
 
-                {/* Set Skills */}
-                <label>Skills</label>
-                <Autocomplete
-                  multiple
-                  id="fixed-tags-demo"
-                  value={this.state.skills}
-                  onChange={(event, newValue) => {
-                    this.setState({
-                      skills: [
-                        ...newValue.filter(
-                          (option) =>
-                            this.state.fixedOptions.indexOf(option) === -1
-                        ),
-                      ],
-                    });
-                  }}
-                  options={SkillSet}
-                  getOptionLabel={(option) => option}
-                  renderTags={(tagValue, getTagProps) =>
-                    tagValue.map((option, index) => (
-                      <Chip label={option} {...getTagProps({ index })} />
-                    ))
-                  }
-                  style={{ width: "100%" }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label=""
-                      variant="outlined"
-                      placeholder="My Skills"
-                    />
-                  )}
-                />
-                {/* End Set Skills */}
-                <Input
-                  lable="Description"
-                  name="description"
-                  as="textarea"
-                  rows="3"
-                  placeholder="Enter Description..."
-                  onChange={(e) => this.handleChange(e)}
-                ></Input>
+                  {/* Set Skills */}
+                  <label>Skills</label>
+                  <Autocomplete
+                    multiple
+                    id="fixed-tags-demo"
+                    value={this.state.skills}
+                    onChange={(event, newValue) => {
+                      this.setState({
+                        skills: [...newValue],
+                      });
+                    }}
+                    options={SkillSet}
+                    getOptionLabel={(option) => option}
+                    renderTags={(tagValue, getTagProps) =>
+                      tagValue.map((option, index) => (
+                        <Chip label={option} {...getTagProps({ index })} />
+                      ))
+                    }
+                    style={{ width: "100%" }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label=""
+                        variant="outlined"
+                        placeholder="My Skills"
+                      />
+                    )}
+                  />
+                  {/* End Set Skills */}
+                  <Input
+                    lable="Description"
+                    name="description"
+                    as="textarea"
+                    rows="3"
+                    placeholder="Enter Description..."
+                    onChange={(e) => this.handleChange(e)}
+                  ></Input>
 
-                <Form>
-                  <label>Profile Picture</label>
-                  <Form.Group>
-                    <Form.Control
+                  <Form>
+                    <label>Profile Picture</label>
+                    <Form.Group>
+                      <input
+                        required
+                        type="file"
+                        name="photo"
+                        className="form-control"
+                        aria-describedby="emailHelp"
+                        onChange={this.hadleUpload}
+                      />
+                      {/* <Form.Control
                       type="file"
                       name="photo"
                       label="Profile Picture"
                       onChange={this.hadleUpload}
-                    />
-                  </Form.Group>
-                </Form>
-                <section>{/* selected Image preview here */}</section>
-                <Input
-                  name="password"
-                  onChange={(e) => this.handleChange(e)}
-                  lable="Password"
-                  type="password"
-                  placeholder="Enter Your Password..."
-                ></Input>
-                <Input
-                  name="conPassword"
-                  onChange={(e) => this.handleChange(e)}
-                  lable="Re-Enter Password"
-                  type="password"
-                  placeholder="Re-Enter Your Password..."
-                ></Input>
-                <Button
-                  onClick={this.onSubmit}
-                  style={{ width: "100%" }}
-                  variant="primary"
-                  type="submit"
-                >
-                  Sign Up
-                </Button>
-                <section className="text-center">
-                  <p className="mt-4 mb-2  copyright-text">
-                    Already have an account?&nbsp;
-                    <Link to="/login">Log In</Link>
-                  </p>
-                  <p className="mt-5 mb-3 text-muted copyright-text">
-                    Copyright © 2021 All Rights Reserved by &nbsp;
-                    <Link to="/">Company Name</Link>
-                  </p>
-                </section>
+                      required
+                    /> */}
+                    </Form.Group>
+                  </Form>
+                  <section>{/* selected Image preview here */}</section>
+                  <Input
+                    name="password"
+                    onChange={(e) => this.handleChange(e)}
+                    lable="Password"
+                    type="password"
+                    placeholder="Enter Your Password..."
+                  ></Input>
+                  <Input
+                    name="conPassword"
+                    onChange={(e) => this.handleChange(e)}
+                    lable="Re-Enter Password"
+                    type="password"
+                    placeholder="Re-Enter Your Password..."
+                  ></Input>
+                  <Button
+                    style={{ width: "100%" }}
+                    variant="primary"
+                    type="submit"
+                  >
+                    Sign Up
+                  </Button>
+                  <section className="text-center">
+                    <p className="mt-4 mb-2  copyright-text">
+                      Already have an account?&nbsp;
+                      <Link to="/login">Log In</Link>
+                    </p>
+                    <p className="mt-5 mb-3 text-muted copyright-text">
+                      Copyright © 2021 All Rights Reserved by &nbsp;
+                      <Link to="/">Company Name</Link>
+                    </p>
+                  </section>
+                </form>
               </div>
             </div>
           </div>
