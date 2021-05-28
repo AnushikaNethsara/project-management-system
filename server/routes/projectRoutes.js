@@ -163,14 +163,14 @@ router.get("/getProjectSkills/:id", async (req, res) => {
 router.get("/onSearch/:skill", async (req, res) => {
   try {
     let skill = req.params.skill;
-    await Project.find({ skills: skill })
+    await Project.find({ skills: {'$regex' : skill, '$options' : 'i'}})
       .exec()
       .then((project) => {
-
         res.json(project);
       })
       .catch((err) => res.status(400).json("Error : " + err));
   } catch (err) {
+    console.log(err.message)
     res.status(500).json({ error: err.message });
   }
 });

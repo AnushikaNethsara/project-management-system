@@ -15,6 +15,7 @@ import { useHistory } from "react-router-dom";
 const AfterLoginNav = () => {
   const history = useHistory();
   const [searchKeyword, setSearchKeyword] = useState("");
+  const [status, setStatus] = useState(false);
 
   const logout = () => {
     console.log("logout: ");
@@ -24,6 +25,12 @@ const AfterLoginNav = () => {
     window.location.reload();
     console.log("logout2: ");
   };
+  const handleKeyDown=(e) =>{
+
+    if (e.key === 'Enter') {
+      history.push("/search/"+e.target.value);
+    }
+  }
   return (
     <div>
       <Navbar
@@ -56,15 +63,17 @@ const AfterLoginNav = () => {
                   className="mr-sm-2"
                   onChange={(e) => {
                     setSearchKeyword(e.target.value);
+                    setStatus(true);
                   }}
+                  onKeyPress={handleKeyDown}
                 />
               </Form>
-              <li className="nav-item">
-                <NavLink to={"/search/" + searchKeyword} className="nav-link">
-                  <i className="fa fa-search" />
-                  &nbsp; Search
-                </NavLink>
-              </li>
+              {/*<li className="nav-item">*/}
+              {/*  <NavLink to={"/search/" + searchKeyword} className="nav-link">*/}
+              {/*    <button className="btn fa fa-search"  disabled={!status}></button>*/}
+              {/*    &nbsp;*/}
+              {/*  </NavLink>*/}
+              {/*</li>*/}
               <li className="nav-item">
                 <NavLink to="/explore" className="nav-link">
                   <i className="fa fa-globe" />

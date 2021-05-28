@@ -5,6 +5,7 @@ const auth = require("../middleware/auth");
 const User = require("../models/user.model");
 const multer = require("multer");
 const ProfilePicture = require("../models/Photo.model");
+const Project = require("../models/project.model");
 
 const upload = multer({
   limits: {
@@ -119,6 +120,7 @@ router.post("/login", async (req, res) => {
 //***delete account***//
 router.delete("/delete/:id", async (req, res) => {
   try {
+    Project.deleteMany({owner_id:req.params.id});
     const deletedUser = await User.findByIdAndDelete(req.params.id);
     res.json(deletedUser);
   } catch (err) {
