@@ -1,6 +1,8 @@
 import React from "react";
 import { Carousel } from "react-bootstrap";
 import caro from "../../img/caro.png";
+import caro1 from "../../img/caro1.png";
+import caro2 from "../../img/caro2.png";
 
 export default function MyCarousel(props) {
   return (
@@ -22,7 +24,7 @@ export default function MyCarousel(props) {
           <img
             style={{ maxHeight: "50vh" }}
             className="d-block w-100"
-            src={caro}
+            src={caro1}
             alt="Second slide"
           />
 
@@ -35,7 +37,7 @@ export default function MyCarousel(props) {
           <img
             style={{ maxHeight: "50vh" }}
             className="d-block w-100"
-            src={caro}
+            src={caro2}
             alt="Third slide"
           />
 
