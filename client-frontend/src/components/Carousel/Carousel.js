@@ -7,14 +7,24 @@ export default function MyCarousel(props) {
     <div>
       <Carousel>
         <Carousel.Item>
-          <img className="d-block w-100" src={caro} alt="First slide" />
+          <img
+            style={{ maxHeight: "50vh" }}
+            className="d-block w-100"
+            src={caro}
+            alt="First slide"
+          />
           <Carousel.Caption>
             <h3>First slide label</h3>
             <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-          <img className="d-block w-100" src={caro} alt="Second slide" />
+          <img
+            style={{ maxHeight: "50vh" }}
+            className="d-block w-100"
+            src={caro}
+            alt="Second slide"
+          />
 
           <Carousel.Caption>
             <h3>Second slide label</h3>
@@ -22,7 +32,12 @@ export default function MyCarousel(props) {
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-          <img className="d-block w-100" src={caro} alt="Third slide" />
+          <img
+            style={{ maxHeight: "50vh" }}
+            className="d-block w-100"
+            src={caro}
+            alt="Third slide"
+          />
 
           <Carousel.Caption>
             <h3>Third slide label</h3>

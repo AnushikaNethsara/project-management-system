@@ -5,13 +5,17 @@ import { Link } from "react-router-dom";
 export default function ProjectCard(props) {
   return (
     <div>
-      <Card>
+      <Card style={{ width: "302px" }}>
         <Card.Header as="h5">{props.title}</Card.Header>
         <Card.Body>
           <Row>
             <Col sm={4}>
               <Link to="/project-overview">
-                <Image src={props.image} thumbnail />
+                <Image
+                  style={{ width: "300px", height: "200px" }}
+                  src={props.image}
+                  thumbnail
+                />
               </Link>
             </Col>
             <Col sm={8}>

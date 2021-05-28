@@ -92,7 +92,7 @@ class Home extends Component {
             <h2 className="text-uppercase mt-5 mb-4">Recommended for you:</h2>
 
             {this.state.recomendedLoading ? (
-              <Row>
+              <Row className="justify-content-md-center">
                 {this.state.values &&
                   this.state.values.map((item) => {
                     return <MyCard data={item} />;
@@ -108,7 +108,7 @@ class Home extends Component {
             <h2 className="text-uppercase mt-5 mb-4">You may try:</h2>
 
             {this.state.tryTheseLoading ? (
-              <Row>
+              <Row className="justify-content-md-center">
                 {this.state.allProjects &&
                   this.state.allProjects.map((item) => {
                     return <MyCard data={item} />;

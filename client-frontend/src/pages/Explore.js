@@ -37,7 +37,7 @@ class Explore extends Component {
         <Container>
           <h1 className="text-center text-uppercase mt-5">Explore Projects</h1>
           {this.state.loading ? (
-            <Row>
+            <Row className="justify-content-md-center">
               {this.state.projects &&
                 this.state.projects.map((item) => {
                   return <MyCard data={item} />;

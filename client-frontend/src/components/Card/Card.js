@@ -8,15 +8,16 @@ export default function MyCard({ data }) {
   return (
     <Link to={"/project-overview/" + data._id}>
       <div className="p-3">
-        <Card style={{ width: "18rem" }}>
+        <Card style={{ width: "302px" }}>
           <Card.Img
+            style={{ width: "300px", height: "200px" }}
             variant="top"
             src={constants.backend_url + `/project/photo/${data._id}`}
           />
 
           <Card.Body>
             <Card.Title className="text-center">{data.title}</Card.Title>
-            <Card.Text className="text-center">{data.description}</Card.Text>
+            {/*  <Card.Text className="text-center">{data.description}</Card.Text> */}
             <Card.Footer>
               <Row>
                 <Col>

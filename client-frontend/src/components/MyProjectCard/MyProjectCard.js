@@ -5,11 +5,17 @@ import axios from "axios";
 import constants from "../../constants/constants";
 import "./style.css";
 
+let txt = "";
 class MyProjectCard extends Component {
   constructor() {
     super();
     this.state = {};
   }
+
+  iterate(value) {
+    txt = txt + value + ", ";
+  }
+
   render() {
     return (
       <div>
@@ -40,9 +46,22 @@ class MyProjectCard extends Component {
                     </Card.Text> */}
                     <Card.Text>
                       <h5>Skills</h5>
-                      {this.props.project.skills.map((item) => (
-                        <p style={{ color: "green" }}>{item}</p>
-                      ))}
+                      <Row>
+                        {this.props.project.skills.map((item) => (
+                          <Col sm={2}>
+                            <p
+                              style={{
+                                color: "green",
+                                backgroundColor: "orange",
+                                textAlign: "center",
+                                borderRadius: "20%",
+                              }}
+                            >
+                              {item}
+                            </p>
+                          </Col>
+                        ))}
+                      </Row>
                     </Card.Text>
 
                     <Card.Text>
@@ -88,13 +107,14 @@ class MyProjectCard extends Component {
           </div>
         ) : (
           <div className="mt-3">
-            <Card>
+            <Card style={{ width: "302px" }}>
               <Card.Header as="h5">{this.props.project.title}</Card.Header>
               <Card.Body>
                 <Row>
                   <Col sm={4}>
                     <div style={{ height: "70%", width: "80%" }}>
                       <Image
+                        style={{ width: "300px", height: "200px" }}
                         src={
                           constants.backend_url +
                           `/project/photo/${this.props.project._id}`

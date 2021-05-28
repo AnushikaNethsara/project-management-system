@@ -52,7 +52,7 @@ class Search extends Component {
           {this.state.loading ? (
             [
               this.state.projectList.length != 0 ? (
-                <Row>
+                <Row className="justify-content-md-center">
                   {this.state.projectList &&
                     this.state.projectList.map((item) => {
                       return <MyCard data={item} />;
