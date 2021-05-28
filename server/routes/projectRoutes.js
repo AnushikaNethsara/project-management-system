@@ -22,8 +22,6 @@ router.post(
   upload.single("photo"),
   async (req, res) => {
     try {
-      console.log(req.body.skills);
-      console.log(Array.isArray(req.body.skills));
       const project = new Project(req.body);
       const file = req.file.buffer;
       project.photo = file;
@@ -165,7 +163,6 @@ router.get("/getProjectSkills/:id", async (req, res) => {
 router.get("/onSearch/:skill", async (req, res) => {
   try {
     let skill = req.params.skill;
-    console.log(skill)
     await Project.find({ skills: skill })
       .exec()
       .then((project) => {
@@ -234,7 +231,6 @@ router.get("/get-applied-projects/:id", async (req, res) => {
     await Project.find({ workers_ids: id })
         .exec()
         .then((project) => {
-          console.log(project)
           res.status(200).json(project);
         })
         .catch((err) => res.status(400).json("Error : " + err));

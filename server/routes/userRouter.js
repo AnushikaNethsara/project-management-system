@@ -20,7 +20,6 @@ const upload = multer({
 
 //** User Registration**//
 router.post("/register", upload.single("photo"), async (req, res) => {
-  console.log(req.body);
   try {
     let { name, email, password, skills, passwordCheck, description } =
       req.body;
@@ -156,7 +155,6 @@ router.get("/", auth, async (req, res) => {
 
 //**** update account details ****//
 router.route("/update/:id").post((req, res) => {
-  console.log("lo: " + req.body.skills);
   User.findById(req.params.id)
     .then((user) => {
       user.name = req.body.name;
