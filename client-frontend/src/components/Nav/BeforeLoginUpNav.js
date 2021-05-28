@@ -7,12 +7,21 @@ import {
   FormControl,
   Button,
 } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import logo from "../../img/logo.png";
 import "./navbar.css";
 
 const BeforeSignUp = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
+  const [status, setStatus] = useState(false);
+  const history = useHistory();
+
+  const handleKeyDown=(e) =>{
+
+    if (e.key === 'Enter') {
+      history.push("/search/"+e.target.value);
+    }
+  }
   return (
     <div>
       <Navbar
@@ -38,6 +47,7 @@ const BeforeSignUp = () => {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto"></Nav>
             <Nav>
+
               <Form inline>
                 <FormControl
                   type="text"
@@ -45,15 +55,18 @@ const BeforeSignUp = () => {
                   className="mr-sm-2"
                   onChange={(e) => {
                     setSearchKeyword(e.target.value);
+                    setStatus(true);
                   }}
+                  onKeyPress={handleKeyDown}
                 />
               </Form>
-              <li className="nav-item">
-                <NavLink to={"/search/" + searchKeyword} className="nav-link">
-                  <i className="fa fa-search" />
-                  &nbsp; Search
-                </NavLink>
-              </li>
+
+              {/*<li className="nav-item">*/}
+              {/*  <NavLink to={"/search/" + searchKeyword} className="nav-link">*/}
+              {/*    <button className="btn fa fa-search"  disabled={!status}></button>*/}
+              {/*    &nbsp;*/}
+              {/*  </NavLink>*/}
+              {/*</li>*/}
               <li className="nav-item">
                 <NavLink to="/explore" className="nav-link">
                   <i className="fa fa-globe" />

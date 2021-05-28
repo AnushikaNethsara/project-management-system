@@ -89,31 +89,40 @@ class Home extends Component {
         <MyCarousel></MyCarousel>
         <Container>
           <div style={{ marginTop: "3%" }}>
-            <h2 className="text-uppercase mt-5 mb-4">Recommended for you:</h2>
+
 
             {this.state.recomendedLoading ? (
-              <Row>
-                {this.state.values &&
-                  this.state.values.map((item) => {
-                    return <MyCard data={item} />;
-                  })}
-              </Row>
+             <div>
+               <h2 className="text-uppercase mt-5 mb-4">Recommended for you:</h2>
+               <Row>
+                 {this.state.values &&
+                 this.state.values.map((item) => {
+                   return <MyCard data={item} />;
+                 })}
+               </Row>
+             </div>
             ) : (
               <div className="text-center" style={{ marginTop: "10%" }}>
+                {this.state.values ===""?
                 <BeatLoader color={"#0052d4"} loading={true} size={100} />
+                :
+                    <div></div>
+                }
+
               </div>
             )}
           </div>
           <div className="mt-5">
-            <h2 className="text-uppercase mt-5 mb-4">You may try:</h2>
-
             {this.state.tryTheseLoading ? (
-              <Row>
-                {this.state.allProjects &&
-                  this.state.allProjects.map((item) => {
-                    return <MyCard data={item} />;
-                  })}
-              </Row>
+                <div>
+                  <h2 className="text-uppercase mt-5 mb-4">You may try:</h2>
+                  <Row>
+                    {this.state.allProjects &&
+                    this.state.allProjects.map((item) => {
+                      return <MyCard data={item} />;
+                    })}
+                  </Row>
+                </div>
             ) : (
               <div className="text-center" style={{ marginTop: "10%" }}>
                 <BeatLoader color={"#0052d4"} loading={true} size={100} />
